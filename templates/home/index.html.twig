@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Home{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="/js/fullcalendar/core/main.css" rel='stylesheet' type="text/css" />
+    <link href="/js/fullcalendar/daygrid/main.css" rel='stylesheet' type="text/css" />
+    <link href="/js/fullcalendar/timegrid/main.css" rel='stylesheet' type="text/css" />
+    <link href="/css/calendar.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 
 {% block body %}
 <div id="calendar"></div>
@@ -14,11 +21,40 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="/js/fullcalendar/core/main.js"></script>
+    <script src="/js/fullcalendar/core/locales/en-nz.js"></script>
+    <script src="/js/fullcalendar/daygrid/main.js"></script>
+    <script src="/js/fullcalendar/timegrid/main.js"></script>
+    <script>
+        const openOrderConfirmation = (date, time) => {
+            const formattedDate = new Date(date).toLocaleDateString('en-nz');
+            document.getElementById('order-modal').classList.add('is-active');
+            document.getElementById('modal-content').innerHTML = `
+            <div class="box has-text-centered">
+                <form action="confirm_order.php" method="POST">
+                    <p>You want to order a delivery on the <strong>${formattedDate}</strong> in the <strong>${time}</strong>.
+                    </p>
+                    <p>Is that ok ?</p>
+                    <input type="hidden" name="date" value="${date}">
+                    <input type="hidden" name="time" value="${time}">
+                    <button onclick="closeModal()" class="button is-danger">Cancel</button>
+                    <button type="submit" class="button is-success">Confirm</button>
+                </form>
+            </div>`
+        }
+
+        const closeModal = () => {
+            document.getElementById('order-modal').classList.remove('is-active');
+        }</script>
 <script>
 const orders = {{ orders | raw }};
 // Hack dégueu pour que ça marche comme avant
 const morningOrders = orders.filter(order => order.deliveryTime === 'morning');
 const afternoonOrders = orders.filter(order => order.deliveryTime === 'afternoon');
+const ordersDates = {
+    'morning': morningOrders,
+    'afternoon': afternoonOrders,
+};
 document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             const today = new Date();
