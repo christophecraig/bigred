@@ -196,6 +196,4 @@ class Clients
 
         return $this;
     }
-
-
 }
