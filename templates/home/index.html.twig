@@ -10,14 +10,18 @@
 {% endblock %}
 
 {% block body %}
-<div id="calendar"></div>
-    <div id="order-modal" class="modal">
+<div class="card">
+    <div class="card-content">
+        <div id="calendar"></div>
+        <div id="order-modal" class="modal">
             <div class="modal-background" onclick="closeModal()"></div>
                 <div id="modal-content" class="modal-content">
 
                 </div>
             <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
         </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
