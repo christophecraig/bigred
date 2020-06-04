@@ -19,6 +19,13 @@ class OrdersRepository extends ServiceEntityRepository
         parent::__construct($registry, Orders::class);
     }
 
+    public function findAll() 
+    {
+        return $this->createQueryBuilder('o')
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Orders[] Returns an array of Orders objects
     //  */

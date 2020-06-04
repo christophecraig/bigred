@@ -13,9 +13,12 @@
         </div>
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
 <script>
-console.log({{orders}});
+const orders = {{ orders | raw }};
+// Hack dégueu pour que ça marche comme avant
+const morningOrders = orders.filter(order => order.deliveryTime === 'morning');
+const afternoonOrders = orders.filter(order => order.deliveryTime === 'afternoon');
 document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             const today = new Date();
