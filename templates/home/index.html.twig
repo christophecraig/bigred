@@ -1,20 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div id="calendar"></div>
+    <div id="order-modal" class="modal">
+            <div class="modal-background" onclick="closeModal()"></div>
+                <div id="modal-content" class="modal-content">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                </div>
+            <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
+        </div>
+{% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/christophe/Projects/bigred-3/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/christophe/Projects/bigred-3/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block javascript %}
+<script>
+console.log({{orders}});
+document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            const today = new Date();
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'en-nz',
+                datesRender: function(info) {
+                    for (time in ordersDates) {
+                        for (date in ordersDates[time]) {
+                            if (ordersDates[time][date] > 4) {
+                                let cell = document.querySelector('[data-date="'+date+'"] .'+time);
+                                if (cell) {
+                                    cell.style="background-color: red!important; cursor: unset; margin-bottom: 0!important;";
+                                    cell.onclick="";
+                                }
+                            }
+                        }
+                    }
+                },
+                dayRender: function(dayRenderInfo) {
+                    const date = dayRenderInfo.el.getAttribute('data-date');
+                    // If date is past
+                    if (new Date(date) < today) {
+                        dayRenderInfo.el.innerHTML = `
+                        <div class="tile" style="height: 100%;">
+                            <div class="tile is-ancestor" style="height: 100%;">
+                                <div class="tile is-vertical is-parent" style="height: 100%;">
+                                    <div class="tile is-child morning columns is-centered is-vcentered has-background-grey" style="margin-bottom: 0!important; cursor: unset;">
+                                        <p>Morning</p>
+                                    </div>
+                                    <div class="tile is-child afternoon columns is-centered is-vcentered has-background-grey" style="cursor: unset";>
+                                        <p>Afternoon</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                    } else {
+                        dayRenderInfo.el.innerHTML = `
+                        <div class="tile" style="height: 100%;">
+                            <div class="tile is-ancestor" style="height: 100%;">
+                                <div class="tile is-vertical is-parent" style="height: 100%;">
+                                    <div class="tile is-child morning columns is-centered is-vcentered has-background-grey-light" onclick="openOrderConfirmation('${date}', 'morning')" style="margin-bottom: 0!important">
+                                        <p>Morning</p>
+                                    </div>
+                                    <div class="tile is-child afternoon columns is-centered is-vcentered has-background-grey-lighter" onclick="openOrderConfirmation('${date}', 'afternoon')">
+                                        <p>Afternoon</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                    }
+                },
+                plugins: ['dayGrid', 'timeGrid']
+            });
+
+            calendar.render();
+        });
+    </script>
 {% endblock %}

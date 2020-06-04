@@ -2,10 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Big Red Firewood - {% block title %}{% endblock %}</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css" rel="stylesheet" type="text/css">        
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {% include('navbar.html.twig') %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
