@@ -1,6 +1,19 @@
 security:
+  encoders:
+    App\Entity\Users:
+      algorithm: auto
+    App\Entity\Clients:
+      algorithm: auto
   # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
   providers:
+    app_user_provider:
+      entity:
+        class: App\Entity\Users
+        property: email
+    app_client_provider:
+      entity:
+        class: App\Entity\Clients
+        property: email
     users_in_memory: { memory: null }
   firewalls:
     dev:
@@ -9,7 +22,16 @@ security:
     main:
       anonymous: true
       lazy: true
-      provider: users_in_memory
+      provider: app_user_provider
+      guard:
+        authenticators:
+          - App\Security\UsersAuthenticator
+          - App\Security\ClientsAuthenticator
+        entry_point: App\Security\ClientsAuthenticator
+      logout:
+        path: app_logout
+        # where to redirect after logout
+        # target: app_any_route
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#firewalls-authentication
