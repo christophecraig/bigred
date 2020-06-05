@@ -64,11 +64,11 @@ class Orders
     private $paymentStatus = 'waiting';
 
     /**
-     * @var \Clients
+     * @var Clients
      *
      * @ORM\ManyToOne(targetEntity="Clients")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $client;
@@ -95,8 +95,9 @@ class Orders
         return $this->confirmationDate;
     }
 
-    public function setConfirmationDate(?\DateTimeInterface $confirmationDate): self
-    {
+    public function setConfirmationDate(
+        ?\DateTimeInterface $confirmationDate
+    ): self {
         $this->confirmationDate = $confirmationDate;
 
         return $this;
@@ -150,7 +151,7 @@ class Orders
         return $this;
     }
 
-    public function getClient(): ?Clients
+    public function getClient(): Clients
     {
         return $this->client;
     }
@@ -161,6 +162,4 @@ class Orders
 
         return $this;
     }
-
-
 }
