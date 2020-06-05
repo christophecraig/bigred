@@ -1,7 +1,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="/assets/firewood.png">
+      <img src="/assets/firewood.png" />
     </a>
 
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -22,21 +22,21 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-            {# TODO: Conditional display of the buttons #}
-          <a href="/register.php" class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a href="/login" class="button is-light">
-            Log in
-          </a>
-            {# else #}
-          <a href="/account.php" class="button is-primary">
-            <strong>Account</strong>
-          </a>
-          <a href="/logout" class="button is-light">
-            Log out
-          </a>
-            {# endif #}
+          {% if app.user %}
+            <a href="/account" class="button is-primary">
+              <strong>Account</strong>
+            </a>
+            <a href="/logout" class="button is-light">
+              Log out
+            </a>
+          {% else %}
+            <a href="/register" class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a href="/login" class="button is-light">
+              Log in
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>
