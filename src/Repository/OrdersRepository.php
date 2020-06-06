@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Orders;
+use App\Entity\Clients;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,11 +21,24 @@ class OrdersRepository extends ServiceEntityRepository
         parent::__construct($registry, Orders::class);
     }
 
-    public function findAll() 
+    public function findAll()
     {
+        $fields = [
+            'o.id',
+            'o.confirmationDate',
+            'o.deliveryDate',
+            'o.deliveryTime',
+            'o.status',
+            'o.paymentStatus',
+            'client.id clientId',
+            'client.firstName',
+            'client.lastName',
+        ];
         return $this->createQueryBuilder('o')
-        ->getQuery()
-        ->getResult();
+            ->select($fields)
+            ->innerJoin('o.client', 'client')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
