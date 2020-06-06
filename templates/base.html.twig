@@ -15,7 +15,7 @@
     {% endblock %}
   </head>
   <body>
-    {% include 'navbar.html.twig' %}
+    {% include 'partials/navbar.html.twig' %}
     {% for message in app.flashes('success') %}
       <div class="flash-notice">
         {{ message }}
