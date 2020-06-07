@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Orders index
+{% endblock %}
+
+{% block body %}
+  <h1 class="title">
+    My orders
+  </h1>
+
+  <div class="card">
+    <div class="card-content">
+      <ul>
+        {% for order in orders %}
+          <li class="box">
+            <div class="columns">
+              <div class="column">
+                {{ order.confirmationDate
+                  ? order.confirmationDate|date('Y-m-d H:i:s')
+                  : '' }}
+              </div>
+              <div class="column">
+                {{ order.deliveryDate ? order.deliveryDate|date('Y-m-d') : '' }}
+              </div>
+              <div class="column">
+                {{ order.deliveryTime }}
+              </div>
+              <div class="column">
+                {{ order.status }}
+              </div>
+              <div class="column">
+                {{ order.paymentStatus }}
+              </div>
+              <div class="column">
+                <a href="{{
+                  path(
+                    'orders_show',
+                    {
+                      id: order.id
+                    }
+                  )
+                  }}">
+                  show
+                </a>
+                <a href="{{
+                  path(
+                    'orders_edit',
+                    {
+                      id: order.id
+                    }
+                  )
+                  }}">
+                  edit
+                </a>
+              </div>
+            </div>
+          </li>
+        {% else %}
+          <div colspan="8">
+            no records found
+          </div>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <a href="{{ path('orders_new') }}">Create new</a>
+{% endblock %}

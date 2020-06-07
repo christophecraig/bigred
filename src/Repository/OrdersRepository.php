@@ -41,6 +41,28 @@ class OrdersRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByClient(Clients $client)
+    {
+        $fields = [
+            'o.id',
+            'o.confirmationDate',
+            'o.deliveryDate',
+            'o.deliveryTime',
+            'o.status',
+            'o.paymentStatus',
+            'client.id clientId',
+            'client.firstName',
+            'client.lastName',
+        ];
+        return $this->createQueryBuilder('o')
+            ->select($fields)
+            ->innerJoin('o.client', 'client')
+            ->andWhere('client.id = :client')
+            ->setParameter('client', $client)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Orders[] Returns an array of Orders objects
     //  */

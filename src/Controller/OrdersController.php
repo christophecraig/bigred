@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Clients;
 use App\Entity\Orders;
 use App\Form\OrdersType;
 use App\Repository\OrdersRepository;
@@ -31,6 +32,18 @@ class OrdersController extends AbstractController
     public function showAll(OrdersRepository $ordersRepository): Response
     {
         return $this->json(['orders' => $ordersRepository->findAll()]);
+    }
+
+    /**
+     * @Route("/byclient/{id}", name="orders_byclient", methods={"GET"})
+     */
+    public function showById(
+        OrdersRepository $ordersRepository,
+        Clients $client
+    ): Response {
+        return $this->render('orders/index.html.twig', [
+            'orders' => $ordersRepository->findByClient($client),
+        ]);
     }
 
     /**
