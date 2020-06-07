@@ -1,6 +1,6 @@
 {% block form_row %}
   <div class="field">
-    {{ form_label(form) }}
+    {{ form_label(form, null, { label_attr: { class: 'label' }}) }}
     {{ form_errors(form) }}
     {{
       form_widget(

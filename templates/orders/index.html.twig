@@ -14,16 +14,10 @@
       <ul>
         {% for order in orders %}
           <li class="box">
-            <div class="columns">
+            <div class="columns is-vcentered">
               <div class="column">
-                {{ order.confirmationDate
-                  ? order.confirmationDate|date('Y-m-d H:i:s')
-                  : '' }}
-              </div>
-              <div class="column">
-                {{ order.deliveryDate ? order.deliveryDate|date('Y-m-d') : '' }}
-              </div>
-              <div class="column">
+                {{ order.deliveryDate|date('Y-m-d') }}
+                -
                 {{ order.deliveryTime }}
               </div>
               <div class="column">
@@ -33,7 +27,8 @@
                 {{ order.paymentStatus }}
               </div>
               <div class="column">
-                <a href="{{
+                <a class="button is-primary"
+                  href="{{
                   path(
                     'orders_show',
                     {
@@ -43,7 +38,8 @@
                   }}">
                   show
                 </a>
-                <a href="{{
+                <a class="button is-warning"
+                  href="{{
                   path(
                     'orders_edit',
                     {
@@ -54,6 +50,11 @@
                   edit
                 </a>
               </div>
+              {% if client is not defined %}
+                <div class="column">
+                  {{ order.firstName }} {{ order.lastName }}
+                </div>
+              {% endif %}
             </div>
           </li>
         {% else %}

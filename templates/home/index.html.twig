@@ -10,8 +10,26 @@
 {% endblock %}
 
 {% block body %}
+<h1 class="title has-text-danger">Big Red Firewood</h1>
+<section class="section">
+    <h3 class="title">$250/3 cubic meters approx</h3>
+    <p>Pine and Mac mix can supply in Rings or Split or just Mac or Pine loads.</p>
+    <p>May be rain wet</p>
+    <p><strong>Pahiatua, Eketahuna and Woodville only</strong></p>
+    <p>WINZ APPROVED PROVIDER</p>
+    <p>Cash on delivery or internet banking available (please include your name and address as reference)</p> 
+    <p>Loads can also be paid off in installments that suit your income and wood will be delivered on full payment.
+    Also have tree fellers license and taking inquiries about tree felling.
+    P.M us on Facebook messenger "BigRed Firewood"
+    OR
+    Text: 0211861472
+    We will contact you in the evening to organize delivery.
+    Thank you from BigRed Firewood.</p>
+</section>
+
 <div class="card">
     <div class="card-content">
+    {% if app.user %}
         <div id="calendar"></div>
         <div id="order-modal" class="modal">
             <div class="modal-background" onclick="closeModal()"></div>
@@ -20,6 +38,9 @@
                 </div>
             <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
         </div>
+        {% else %}
+            You have to <a href="{{ path('app_login') }}">log in</a> before you can place an order.
+        {% endif %}
     </div>
 </div>
 {% endblock %}
@@ -29,94 +50,6 @@
     <script src="/js/fullcalendar/core/locales/en-nz.js"></script>
     <script src="/js/fullcalendar/daygrid/main.js"></script>
     <script src="/js/fullcalendar/timegrid/main.js"></script>
-    <script>
-        const openOrderConfirmation = (date, time) => {
-            const formattedDate = new Date(date).toLocaleDateString('en-nz');
-            document.getElementById('order-modal').classList.add('is-active');
-            document.getElementById('modal-content').innerHTML = `
-            <div class="box has-text-centered">
-                <form action="confirm_order.php" method="POST">
-                    <p>You want to order a delivery on the <strong>${formattedDate}</strong> in the <strong>${time}</strong>.
-                    </p>
-                    <p>Is that ok ?</p>
-                    <input type="hidden" name="date" value="${date}">
-                    <input type="hidden" name="time" value="${time}">
-                    <button onclick="closeModal()" class="button is-danger">Cancel</button>
-                    <button type="submit" class="button is-success">Confirm</button>
-                </form>
-            </div>`
-        }
-
-        const closeModal = () => {
-            document.getElementById('order-modal').classList.remove('is-active');
-        }</script>
-<script>
-const orders = {{ orders | raw }};
-// Hack dégueu pour que ça marche comme avant
-const morningOrders = orders.filter(order => order.deliveryTime === 'morning');
-const afternoonOrders = orders.filter(order => order.deliveryTime === 'afternoon');
-const ordersDates = {
-    'morning': morningOrders,
-    'afternoon': afternoonOrders,
-};
-document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            const today = new Date();
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'en-nz',
-                datesRender: function(info) {
-                    for (time in ordersDates) {
-                        for (date in ordersDates[time]) {
-                            if (ordersDates[time][date] > 4) {
-                                let cell = document.querySelector('[data-date="'+date+'"] .'+time);
-                                if (cell) {
-                                    cell.style="background-color: red!important; cursor: unset; margin-bottom: 0!important;";
-                                    cell.onclick="";
-                                }
-                            }
-                        }
-                    }
-                },
-                dayRender: function(dayRenderInfo) {
-                    const date = dayRenderInfo.el.getAttribute('data-date');
-                    // If date is past
-                    if (new Date(date) < today) {
-                        dayRenderInfo.el.innerHTML = `
-                        <div class="tile" style="height: 100%;">
-                            <div class="tile is-ancestor" style="height: 100%;">
-                                <div class="tile is-vertical is-parent" style="height: 100%;">
-                                    <div class="tile is-child morning columns is-centered is-vcentered has-background-grey" style="margin-bottom: 0!important; cursor: unset;">
-                                        <p>Morning</p>
-                                    </div>
-                                    <div class="tile is-child afternoon columns is-centered is-vcentered has-background-grey" style="cursor: unset";>
-                                        <p>Afternoon</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-                    } else {
-                        dayRenderInfo.el.innerHTML = `
-                        <div class="tile" style="height: 100%;">
-                            <div class="tile is-ancestor" style="height: 100%;">
-                                <div class="tile is-vertical is-parent" style="height: 100%;">
-                                    <div class="tile is-child morning columns is-centered is-vcentered has-background-grey-light" onclick="openOrderConfirmation('${date}', 'morning')" style="margin-bottom: 0!important">
-                                        <p>Morning</p>
-                                    </div>
-                                    <div class="tile is-child afternoon columns is-centered is-vcentered has-background-grey-lighter" onclick="openOrderConfirmation('${date}', 'afternoon')">
-                                        <p>Afternoon</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-                    }
-                },
-                plugins: ['dayGrid', 'timeGrid']
-            });
-
-            calendar.render();
-        });
-    </script>
+    <script>const orders = {{ orders | raw }};</script>
+    <script src="/js/calendar.js"></script>
 {% endblock %}
