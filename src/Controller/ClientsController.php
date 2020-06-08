@@ -6,9 +6,12 @@ use App\Entity\Clients;
 use App\Form\ClientsType;
 use App\Repository\ClientsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/clients")
@@ -49,7 +52,7 @@ class ClientsController extends AbstractController
     }
 
     /**
-     * @Route("/profile/", name="clients_show", methods={"GET"})
+     * @Route("/account/", name="show_account", methods={"GET"})
      */
     public function show(): Response
     {
@@ -99,5 +102,31 @@ class ClientsController extends AbstractController
         }
 
         return $this->redirectToRoute('clients_index');
+    }
+
+    /**
+     * @Route("/change-password", name="change_password", methods={"GET","POST"})
+     */
+    public function changePassword(Request $request)
+    {
+        $client = $this->getUser();
+
+        $form = $this->createFormBuilder($client)
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'New Password'],
+                'second_options' => ['label' => 'Repeat New Password'],
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'button'],
+            ])
+            ->getForm();
+
+        // TODO : process form
+
+        return $this->render('clients/change_password.html.twig', [
+            'client' => $client,
+            'form' => $form->createView(),
+        ]);
     }
 }

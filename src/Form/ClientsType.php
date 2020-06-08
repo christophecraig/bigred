@@ -16,7 +16,6 @@ class ClientsType extends AbstractType
             ->add('lastName')
             ->add('email')
             ->add('telephone')
-            ->add('plainPassword')
             ->add('address')
             ->add('city')
             ->add('code')

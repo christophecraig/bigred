@@ -231,7 +231,7 @@ class Clients implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**
@@ -289,6 +289,8 @@ class Clients implements UserInterface
     {
         $this->plainPassword = $plainPassword;
 
+        // Make doctrine see the password change
+        $this->password = null;
         return $this;
     }
 }
