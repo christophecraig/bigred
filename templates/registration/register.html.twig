@@ -10,16 +10,10 @@
       {{ flashError }}
     </div>
   {% endfor %}
-  <section class="container">
-    <div class="card">
-      <div class="card-content">
-        <h1 class="title is-2">
-          Sign up
-        </h1>
-        {{ form_start(registrationForm) }}
-        {{ form_widget(registrationForm) }}
-        {{ form_end(registrationForm) }}
-      </div>
-    </div>
-  </section>
+  <h1 class="title is-2">
+    Sign up
+  </h1>
+  {{ form_start(registrationForm) }}
+  {{ form_widget(registrationForm) }}
+  {{ form_end(registrationForm) }}
 {% endblock %}
