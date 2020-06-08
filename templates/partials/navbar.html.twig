@@ -23,17 +23,17 @@
       <div class="navbar-item">
         <div class="buttons">
           {% if app.user %}
-            <a href="/clients/profile" class="button is-primary">
+            <a href="{{ path('show_account') }}" class="button is-primary">
               <strong>Account</strong>
             </a>
-            <a href="/logout" class="button is-light">
+            <a href="{{ path('app_logout') }}" class="button is-light">
               Sign out
             </a>
           {% else %}
-            <a href="/register" class="button is-primary">
+            <a href="{{ path('app_register')}}" class="button is-primary">
               <strong>Sign up</strong>
             </a>
-            <a href="/login" class="button is-light">
+            <a href="{{ path('app_login')}}" class="button is-light">
               Sign in
             </a>
           {% endif %}
