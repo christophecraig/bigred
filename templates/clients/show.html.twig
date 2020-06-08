@@ -5,23 +5,15 @@
 {% endblock %}
 
 {% block body %}
-  <h1>
-    Clients
+  <h1 class="title">
+    My account
   </h1>
 
   <table class="table">
     <tbody>
       <tr>
         <th>
-          Id
-        </th>
-        <td>
-          {{ client.id }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          FirstName
+          First Name
         </th>
         <td>
           {{ client.firstName }}
@@ -29,7 +21,7 @@
       </tr>
       <tr>
         <th>
-          LastName
+          Last Name
         </th>
         <td>
           {{ client.lastName }}
@@ -49,14 +41,6 @@
         </th>
         <td>
           {{ client.telephone }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Password
-        </th>
-        <td>
-          {{ client.password }}
         </td>
       </tr>
       <tr>
