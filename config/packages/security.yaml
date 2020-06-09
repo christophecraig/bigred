@@ -19,13 +19,23 @@ security:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
-    main:
+    admin:
+      pattern: ^/admin
       anonymous: true
-      lazy: true
       provider: app_user_provider
       guard:
         authenticators:
           - App\Security\UsersAuthenticator
+        entry_point: App\Security\UsersAuthenticator
+      logout:
+        path: admin_logout
+
+    main:
+      anonymous: true
+      lazy: true
+      provider: app_client_provider
+      guard:
+        authenticators:
           - App\Security\ClientsAuthenticator
         entry_point: App\Security\ClientsAuthenticator
       logout:
@@ -41,5 +51,5 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/admin, roles: ROLE_ADMIN }
+    # - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/account, roles: ROLE_CLIENT }
