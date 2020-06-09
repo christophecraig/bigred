@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Clients;
+use App\Entity\Orders;
 use App\Form\ClientsType;
 use App\Repository\ClientsRepository;
+use App\Repository\OrdersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -127,6 +129,20 @@ class ClientsController extends AbstractController
         return $this->render('clients/change_password.html.twig', [
             'client' => $client,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/orders", name="my_orders", methods={"GET"})
+     */
+    public function getOrders(
+        Request $request,
+        OrdersRepository $ordersRepository
+    ) {
+        $client = $this->getUser();
+        $orders = $ordersRepository->findByClient($client);
+        return $this->render('orders/index.html.twig', [
+            'orders' => $orders,
         ]);
     }
 }
