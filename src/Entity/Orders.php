@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \DateTimeInterface;
 
 /**
  * Orders
@@ -66,19 +67,22 @@ class Orders
     /**
      * @var Clients
      *
-     * @ORM\ManyToOne(targetEntity="Clients")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=false)
-     * })
+     * @ORM\ManyToOne(targetEntity="Clients", inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $client;
+
+    public function __construct()
+    {
+        $this->orderDate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOrderDate(): ?\DateTimeInterface
+    public function getOrderDate(): DateTimeInterface
     {
         return $this->orderDate;
     }
@@ -151,7 +155,7 @@ class Orders
         return $this;
     }
 
-    public function getClient(): Clients
+    public function getClient(): ?Clients
     {
         return $this->client;
     }
