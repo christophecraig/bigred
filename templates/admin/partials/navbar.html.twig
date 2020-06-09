@@ -1,0 +1,42 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img src="/assets/firewood.png" />
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a href="/" class="navbar-item">
+        Home
+      </a>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          {% if app.user %}
+            <a href="{{ path('show_account') }}" class="button is-primary">
+              <strong>Account</strong>
+            </a>
+            <a href="{{ path('admin_logout') }}" class="button is-light">
+              Sign out
+            </a>
+          {% else %}
+            Admin - 
+            <a href="{{ path('admin_login')}}" class="button is-light">
+              Sign in
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

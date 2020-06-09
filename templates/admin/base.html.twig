@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Big Red Firewood -&nbsp;{% block title %}
+
+      {% endblock %}
+    </title>
+    {# <link rel="icon" type="image/png" href="/myicon.png" /> #}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+      rel="stylesheet"
+      type="text/css" />
+    {% block stylesheets %}
+
+    {% endblock %}
+  </head>
+  <body>
+    {% include 'admin/partials/navbar.html.twig' %}
+    {% for message in app.flashes('success') %}
+      <div class="flash-notice">
+        {{ message }}
+      </div>
+    {% endfor %}
+    <section class="container is-widescreen">
+      <div class="card">
+        <div class="card-content">
+          {% block body %}
+
+          {% endblock %}
+        </div>
+      </div>
+    </section>
+    {% block javascripts %}
+      <script src="https://kit.fontawesome.com/20c465eb55.js"></script>
+    {% endblock %}
+  </body>
+</html>
