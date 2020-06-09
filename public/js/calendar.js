@@ -3,7 +3,7 @@ const openOrderConfirmation = (date, time) => {
     document.getElementById('order-modal').classList.add('is-active');
     document.getElementById('modal-content').innerHTML = `
     <div class="box has-text-centered">
-        <form action="confirm_order.php" method="POST">
+        <form action="/orders/new" method="POST">
             <p>You want to order a delivery on the <strong>${formattedDate}</strong> in the <strong>${time}</strong>.
             </p>
             <p>Is that ok ?</p>
