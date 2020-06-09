@@ -9,22 +9,28 @@ const openOrderConfirmation = (date, time) => {
             <p>Is that ok ?</p>
             <input type="hidden" name="date" value="${date}">
             <input type="hidden" name="time" value="${time}">
-            <button onclick="closeModal()" class="button is-danger">Cancel</button>
+            <button onclick="closeModal(event)" class="button is-danger">Cancel</button>
             <button type="submit" class="button is-success">Confirm</button>
         </form>
     </div>`
 }
 
-const closeModal = () => {
+const closeModal = e => {
+    e.preventDefault();
     document.getElementById('order-modal').classList.remove('is-active');
 }
 
-const morningOrders = orders.filter(order => order.deliveryTime === 'morning');
-const afternoonOrders = orders.filter(order => order.deliveryTime === 'afternoon');
+const morningOrders = orders.filter(order => order.deliveryTime === 'morning').map(order => {
+    return order.deliveryDate.split('T')[0]
+});
+const afternoonOrders = orders.filter(order => order.deliveryTime === 'afternoon').map(order => {
+    return order.deliveryDate.split('T')[0]
+});
 const ordersDates = {
     'morning': morningOrders,
     'afternoon': afternoonOrders,
 };
+console.log(ordersDates);
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     const today = new Date();
@@ -32,10 +38,18 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'en-nz',
         datesRender: function (info) {
+            let counter = 0;
+            let lastDate = '';
             for (time in ordersDates) {
                 for (date in ordersDates[time]) {
-                    if (ordersDates[time][date] > 4) {
-                        let cell = document.querySelector('[data-date="' + date + '"] .' + time);
+                    if (lastDate != ordersDates[time][date]) {
+                        counter = 0;
+                    }
+                    lastDate = ordersDates[time][date];
+                    counter++;
+                    console.log(lastDate, counter);
+                    if (counter > 4) {
+                        let cell = document.querySelector('[data-date="' + lastDate + '"] .' + time);
                         if (cell) {
                             cell.style = "background-color: red!important; cursor: unset; margin-bottom: 0!important;";
                             cell.onclick = "";

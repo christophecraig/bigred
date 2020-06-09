@@ -27,6 +27,7 @@ class Orders
      *
      * @ORM\Column(name="order_date", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
+    // TODO: Switch to \DateTimeImmutable ?
     private $orderDate = 'CURRENT_TIMESTAMP';
 
     /**

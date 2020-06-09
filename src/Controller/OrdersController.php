@@ -6,6 +6,7 @@ use App\Entity\Clients;
 use App\Entity\Orders;
 use App\Form\OrdersType;
 use App\Repository\OrdersRepository;
+use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,15 +53,24 @@ class OrdersController extends AbstractController
     public function new(Request $request): Response
     {
         $order = new Orders();
+        if ($request->get('date') && $request->get('time')) {
+            $order->setDeliveryDate(new \DateTime($request->get('date')));
+            $order->setDeliveryTime($request->get('time'));
+        }
         $form = $this->createForm(OrdersType::class, $order);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $order->setClient($this->getUser());
+            $order->setOrderDate(
+                new \DateTime('now', new DateTimeZone('Pacific/Auckland'))
+            );
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
             $entityManager->flush();
 
-            return $this->redirectToRoute('orders_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('orders/new.html.twig', [
