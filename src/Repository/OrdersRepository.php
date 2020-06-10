@@ -33,6 +33,7 @@ class OrdersRepository extends ServiceEntityRepository
             'client.id clientId',
             'client.firstName',
             'client.lastName',
+            'client.city',
         ];
         return $this->createQueryBuilder('o')
             ->select($fields)
