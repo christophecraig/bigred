@@ -36,13 +36,6 @@ class Users implements UserInterface
     private $password;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=0, nullable=false, options={"default"="user"})
-     */
-    private $role = 'user';
-
-    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -113,18 +106,6 @@ class Users implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
     }
 
     /**
