@@ -5,30 +5,117 @@
 {% endblock %}
 
 {% block body %}
-  <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
-    18px/1.5 sans-serif; } .example-wrapper code { background: #F5F5F5; padding:
-    2px 6px; }
-  </style>
+  <div class="card">
+    <div class="card-content">
+      <div class="tabs is-toggle is-fullwidth is-large">
+        <ul>
+          <li id="all" class="is-active">
+            <a onclick="changeTab(event)">
+              <span class="icon">
+                <i class="fas fa-stream" aria-hidden="true"></i>
+              </span>
+              <span>All</span>
+            </a>
+          </li>
+          <li>
+            <a onclick="changeTab(event, 'pending')">
+              <span class="icon">
+                <i class="fas fa-hourglass-start" aria-hidden="true"></i>
+              </span>
+              <span>Pending</span>
+            </a>
+          </li>
+          <li>
+            <a onclick="changeTab(event, 'rescheduled')">
+              <span class="icon">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+              </span>
+              <span>Rescheduled</span>
+            </a>
+          </li>
+          <li>
+            <a onclick="changeTab(event, 'confirmed')">
+              <span class="icon">
+                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+              </span>
+              <span>Confirmed</span>
+            </a>
+          </li>
+          <li>
+            <a onclick="changeTab(event, 'cancelled')">
+              <span class="icon">
+                <i class="far fa-times-circle" aria-hidden="true"></i>
+              </span>
+              <span>Cancelled</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <ul id="orders">
+        {% for order in orders %}
+          <li class="box" id="order-{{ order.id }}">
+            <p>
+              {{ order.deliveryDate|date }} {{ order.deliveryTime }} from {{ "#{order.firstName} #{order.lastName}" }}
+              in {{ order.city }}
+            </p>
+            <p>
+              Status: {{ order.status }}
+            </p>
+            <button onclick="updateOrder({{ order.id }}, 'confirmed', event)"
+              class="button is-success">
+              Confirm
+            </button>
+            <button onclick="updateOrder({{ order.id }}, 'rescheduled', event)"
+              class="button is-warning">
+              Reschedule
+            </button>
+            <button onclick="updateOrder({{ order.id }}, 'cancelled', event)"
+              class="button is-danger">
+              Cancel
+            </button>
+          </li>
+        {% else %}
 
-  <div class="example-wrapper">
-    <h1>
-      Hello {{ controller_name }}! ✅
-    </h1>This friendly message is coming from:<ul>
-      <li>
-        Your controller at <code><a href="{{ '/Users/christophe/Projects/bigred-3/src/Controller/AdminController.php'|file_link(
-              0
-            ) }}">
-            src/Controller/AdminController.php
-          </a></code>
-      </li>
-      <li>
-        Your template at <code><a href="{{ '/Users/christophe/Projects/bigred-3/templates/admin/index.html.twig'|file_link(
-              0
-            ) }}">
-            templates/admin/index.html.twig
-          </a></code>
-      </li>
-    </ul>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
+  {# <script>
+        let orders = {{ orders }};
+        const ordersContainer = document.getElementById('orders');
+        orders.forEach(order => {
+            ordersContainer.innerHTML += `<li class="box" id="order-${order.id}">
+                <p>${order.delivery_date} ${order.delivery_time} from ${order.name} in ${order.city}</p>
+                <p>Status: ${order.status}</p>
+                <button onclick="updateOrder(${order.id}, 'confirmed', event)" class="button is-success">Confirm</button>
+                <button onclick="updateOrder(${order.id}, 'rescheduled', event)" class="button is-warning">Reschedule</button>
+                <button onclick="updateOrder(${order.id}, 'cancelled', event)" class="button is-danger">Cancel</button>
+            </li>`
+        });
+
+        const updateOrder = (orderId, status, e) => {
+            e.currentTarget.classList.add('is-loading');
+            fetch('/admin/update_order.php', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "order_id": orderId,
+                    "status": status
+                })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                orderIndex = orders.findIndex(order => order.id === data.id)
+                orders[orderIndex] = data;
+                if (currentTab) {
+                    currentTab.click();
+                } else {
+                    changeTab();
+                }
+            });
+        };
+    </script> #}
 {% endblock %}
