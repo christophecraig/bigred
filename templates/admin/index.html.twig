@@ -1,121 +1,165 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block title %}
-  Hello AdminController!
+  Admin
 {% endblock %}
 
 {% block body %}
-  <div class="card">
-    <div class="card-content">
-      <div class="tabs is-toggle is-fullwidth is-large">
-        <ul>
-          <li id="all" class="is-active">
-            <a onclick="changeTab(event)">
-              <span class="icon">
-                <i class="fas fa-stream" aria-hidden="true"></i>
-              </span>
-              <span>All</span>
-            </a>
-          </li>
-          <li>
-            <a onclick="changeTab(event, 'pending')">
-              <span class="icon">
-                <i class="fas fa-hourglass-start" aria-hidden="true"></i>
-              </span>
-              <span>Pending</span>
-            </a>
-          </li>
-          <li>
-            <a onclick="changeTab(event, 'rescheduled')">
-              <span class="icon">
-                <i class="fas fa-clock" aria-hidden="true"></i>
-              </span>
-              <span>Rescheduled</span>
-            </a>
-          </li>
-          <li>
-            <a onclick="changeTab(event, 'confirmed')">
-              <span class="icon">
-                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-              </span>
-              <span>Confirmed</span>
-            </a>
-          </li>
-          <li>
-            <a onclick="changeTab(event, 'cancelled')">
-              <span class="icon">
-                <i class="far fa-times-circle" aria-hidden="true"></i>
-              </span>
-              <span>Cancelled</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <ul id="orders">
-        {% for order in orders %}
-          <li class="box" id="order-{{ order.id }}">
-            <p>
-              {{ order.deliveryDate|date }} {{ order.deliveryTime }} from {{ "#{order.firstName} #{order.lastName}" }}
-              in {{ order.city }}
-            </p>
-            <p>
-              Status: {{ order.status }}
-            </p>
-            <button onclick="updateOrder({{ order.id }}, 'confirmed', event)"
-              class="button is-success">
-              Confirm
-            </button>
-            <button onclick="updateOrder({{ order.id }}, 'rescheduled', event)"
-              class="button is-warning">
-              Reschedule
-            </button>
-            <button onclick="updateOrder({{ order.id }}, 'cancelled', event)"
-              class="button is-danger">
-              Cancel
-            </button>
-          </li>
-        {% else %}
-
-        {% endfor %}
-      </ul>
-    </div>
+  <div class="tabs is-toggle is-fullwidth is-large">
+    <ul>
+      <li id="all" class="{{ filter ? '' : 'is-active' }}">
+        <a href="{{ path('admin') }}">
+          <span class="icon">
+            <i class="fas fa-stream" aria-hidden="true"></i>
+          </span>
+          <span>All</span>
+        </a>
+      </li>
+      <li class="{{ filter is same as('pending') ? 'is-active' : '' }}">
+        <a href="{{
+          path(
+            'admin',
+            {
+              filter: 'pending'
+            }
+          )
+          }}">
+          <span class="icon">
+            <i class="fas fa-hourglass-start" aria-hidden="true"></i>
+          </span>
+          <span>Pending</span>
+        </a>
+      </li>
+      <li class="{{ filter is same as('rescheduled') ? 'is-active' : '' }}">
+        <a href="{{
+          path(
+            'admin',
+            {
+              filter: 'rescheduled'
+            }
+          )
+          }}">
+          <span class="icon">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+          </span>
+          <span>Rescheduled</span>
+        </a>
+      </li>
+      <li class="{{ filter is same as('confirmed') ? 'is-active' : '' }}">
+        <a href="{{
+          path(
+            'admin',
+            {
+              filter: 'confirmed'
+            }
+          )
+          }}">
+          <span class="icon">
+            <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+          </span>
+          <span>Confirmed</span>
+        </a>
+      </li>
+      <li class="{{ filter is same as('cancelled') ? 'is-active' : '' }}">
+        <a href="{{
+          path(
+            'admin',
+            {
+              filter: 'cancelled'
+            }
+          )
+          }}">
+          <span class="icon">
+            <i class="far fa-times-circle" aria-hidden="true"></i>
+          </span>
+          <span>Cancelled</span>
+        </a>
+      </li>
+    </ul>
   </div>
-  {# <script>
-        let orders = {{ orders }};
-        const ordersContainer = document.getElementById('orders');
-        orders.forEach(order => {
-            ordersContainer.innerHTML += `<li class="box" id="order-${order.id}">
-                <p>${order.delivery_date} ${order.delivery_time} from ${order.name} in ${order.city}</p>
-                <p>Status: ${order.status}</p>
-                <button onclick="updateOrder(${order.id}, 'confirmed', event)" class="button is-success">Confirm</button>
-                <button onclick="updateOrder(${order.id}, 'rescheduled', event)" class="button is-warning">Reschedule</button>
-                <button onclick="updateOrder(${order.id}, 'cancelled', event)" class="button is-danger">Cancel</button>
-            </li>`
-        });
+  <ul id="orders">
+    {% for order in orders %}
+      <li class="box" id="order-{{ order.id }}">
+        <p>
+          {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} from
+          {{ "#{order.firstName} #{order.lastName}" }}
+          in {{ order.city }}
+        </p>
+        <p>
+          Status: {{ order.status }}
+        </p>
+        <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter })}}" class="button is-success">Confirm</a>
+        <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}" class="button is-warning">Reschedule</a>
+        <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled', filter: filter})}}" class="button is-danger">Cancel</a>
+      </li>
+    {% else %}
 
-        const updateOrder = (orderId, status, e) => {
-            e.currentTarget.classList.add('is-loading');
-            fetch('/admin/update_order.php', {
-                method: 'POST',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "order_id": orderId,
-                    "status": status
-                })
-            }).then(response => {
-                return response.json();
-            }).then(data => {
-                orderIndex = orders.findIndex(order => order.id === data.id)
-                orders[orderIndex] = data;
-                if (currentTab) {
-                    currentTab.click();
-                } else {
-                    changeTab();
-                }
-            });
-        };
-    </script> #}
+    {% endfor %}
+  
+  {#
+    Parameters:
+      * nbPages (int): number of pages
+      * currentPage (int): current pages
+      * url (string): route name & query (string): route parameter
+        ex: list/page-5?q=myFilter (5 = page and query = myFilter)
+#}
+
+
+{% if nbPages > 1 %}
+
+    {# Number of page around current page+1 #}
+    {% set nearbyPagesLimit = 4 %}
+
+    <div>
+        <ul class="pagination">
+            {% if currentPage != 1 %}
+            <li>
+                <a href="{{ path(url, { 'page': 1, 'filter': filter }) }}">First</a>
+            </li>
+            {% endif %}
+            {% for i in 1..nbPages %}
+                {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                    <li class="disabled"><a href="#">...</a></li>
+                {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                    <li class="disabled"><a href="#">...</a></li>
+                {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                {% else %}
+                    <li {% if currentPage == loop.index  %} class="active"{% endif %}>
+                        <a href="{{ path(url, { 'page': loop.index, 'filter': filter }) }}">{{ loop.index }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if currentPage != nbPages %}
+            <li>
+                <a href="{{ path(url, { 'page': nbPages, 'filter': filter }) }}">Last</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}
+
+  
+  
+  {# </ul>
+  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+    <a class="pagination-previous">Previous</a>
+    <a class="pagination-next">Next page</a>
+    <ul class="pagination-list">
+      {% for i in %}
+      <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
+      <li>
+        <a class="pagination-link is-current"
+          aria-label="Page 46"
+          aria-current="page">
+          46
+        </a>
+      </li>
+      <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+    </ul>
+  </nav> #}
 {% endblock %}

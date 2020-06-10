@@ -6,6 +6,7 @@ use App\Entity\Orders;
 use App\Entity\Clients;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,43 @@ class OrdersRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Orders::class);
+    }
+
+    public function findAllPaginated(int $page, int $limit)
+    {
+        $fields = [
+            'o.id',
+            'o.confirmationDate',
+            'o.deliveryDate',
+            'o.deliveryTime',
+            'o.status',
+            'o.paymentStatus',
+            'client.id clientId',
+            'client.firstName',
+            'client.lastName',
+            'client.city',
+        ];
+        $query = $this->createQueryBuilder('o')
+            ->select($fields)
+            ->innerJoin('o.client', 'client')
+            ->getQuery();
+
+        $paginator = $this->paginate($query, $page, $limit);
+        // WHY THIS ???
+        $paginator->setUseOutputWalkers(false);
+        return $paginator;
+    }
+
+    public function paginate($query, $page = 1, $limit = 5)
+    {
+        $paginator = new Paginator($query);
+
+        $paginator
+            ->getQuery()
+            ->setFirstResult($limit * ($page - 1)) // Offset
+            ->setMaxResults($limit);
+
+        return $paginator;
     }
 
     public function findAll()
@@ -62,6 +100,32 @@ class OrdersRepository extends ServiceEntityRepository
             ->setParameter('client', $client)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByStatus(string $status, int $page, int $limit)
+    {
+        $fields = [
+            'o.id',
+            'o.confirmationDate',
+            'o.deliveryDate',
+            'o.deliveryTime',
+            'o.status',
+            'o.paymentStatus',
+            'client.id clientId',
+            'client.firstName',
+            'client.lastName',
+            'client.city',
+        ];
+        $query = $this->createQueryBuilder('o')
+            ->select($fields)
+            ->innerJoin('o.client', 'client')
+            ->andWhere('o.status = :status')
+            ->setParameter('status', $status)
+            ->getQuery();
+
+        $paginator = $this->paginate($query, $page, $limit);
+        $paginator->setUseOutputWalkers(false);
+        return $paginator;
     }
 
     // /**
