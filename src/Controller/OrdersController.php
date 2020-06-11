@@ -10,6 +10,9 @@ use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -50,7 +53,7 @@ class OrdersController extends AbstractController
     /**
      * @Route("/new", name="orders_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $order = new Orders();
         if ($request->get('date') && $request->get('time')) {
@@ -69,6 +72,13 @@ class OrdersController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from(new Address('bigred@christophecraig.com', 'Big Red'))
+                ->to($this->getUser()->getUsername())
+                ->subject('Your order is now waiting for confirmation!')
+                ->text('Super, sublime, excellent!');
+            $mailer->send($email);
 
             return $this->redirectToRoute('home');
         }
