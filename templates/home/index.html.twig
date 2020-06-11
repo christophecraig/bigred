@@ -25,24 +25,26 @@
     Text: 0211861472
     We will contact you in the evening to organize delivery.
     Thank you from BigRed Firewood.</p>
-</section>
 
-<div class="card">
-    <div class="card-content">
+
     {% if app.user %}
-        <div id="calendar"></div>
-        <div id="order-modal" class="modal">
-            <div class="modal-background" onclick="closeModal(event)"></div>
-                <div id="modal-content" class="modal-content">
+    <div class="card">
+        <div class="card-content">
+            <div id="calendar"></div>
+            <div id="order-modal" class="modal">
+                <div class="modal-background" onclick="closeModal(event)"></div>
+                    <div id="modal-content" class="modal-content">
 
-                </div>
-            <button class="modal-close is-large" aria-label="close" onclick="closeModal(event)"></button>
+                    </div>
+                <button class="modal-close is-large" aria-label="close" onclick="closeModal(event)"></button>
+            </div>
         </div>
-        {% else %}
-            You have to <a href="{{ path('app_login') }}">log in</a> before you can place an order.
-        {% endif %}
     </div>
-</div>
+        {% else %}
+            <div class="hero">You have to <a href="{{ path('app_login') }}">log in</a> before you can place an order.</div>
+        {% endif %}
+
+</section>
 {% endblock %}
 
 {% block javascripts %}

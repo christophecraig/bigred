@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block body %}
+<div class="columns">
+<div class="column is-one-third
+is-offset-one-third">
+<div class="card">
+<div class="card-content">
   <form method="post">
     {% if error %}
       <div class="alert alert-danger">
@@ -16,9 +21,8 @@
       <div class="mb-3">
         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
       </div>
-    {% endif %}
-
-    <h1 class="title is-2">
+      {% else %}
+      <h1 class="title is-2">
       Sign in
     </h1>
     <div class="field">
@@ -64,12 +68,13 @@
         </div>
     #}
 
-    <div class="field">
-      <button class="button is-primary" type="submit">Sign in</button>
+    <div class="field buttons is-right">
+      <button class="button is-primary mr-0" type="submit">Sign in</button>
     </div>
   </form>
-  <hr />
-  <div class="has-text-centered">
-    <a href="{{ path('app_register') }}">Don't have an account ? Sign up !</a>
   </div>
+  </div>
+  </div>
+  </div>
+    {% endif %}
 {% endblock %}
