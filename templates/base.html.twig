@@ -23,15 +23,11 @@
         {{ message }}
       </div>
     {% endfor %}
-    <section class="container is-widescreen">
-      <div class="card">
-        <div class="card-content">
-          {% block body %}
+    <div class="container is-widescreen">
+      {% block body %}
 
-          {% endblock %}
-        </div>
-      </div>
-    </section>
+      {% endblock %}
+    </div>
     {% block javascripts %}
       <script src="https://kit.fontawesome.com/20c465eb55.js"></script>
     {% endblock %}

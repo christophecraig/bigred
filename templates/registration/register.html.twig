@@ -10,10 +10,18 @@
       {{ flashError }}
     </div>
   {% endfor %}
-  <h1 class="title is-2">
-    Sign up
-  </h1>
-  {{ form_start(registrationForm) }}
-  {{ form_widget(registrationForm) }}
-  {{ form_end(registrationForm) }}
+  <div class="columns">
+    <div class="column is-one-third is-offset-one-third">
+      <div class="card">
+        <div class="card-content">
+          <h1 class="title is-2">
+            Sign up
+          </h1>
+          {{ form_start(registrationForm) }}
+          {{ form_widget(registrationForm) }}
+          {{ form_end(registrationForm) }}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
