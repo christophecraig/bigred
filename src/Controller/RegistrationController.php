@@ -35,6 +35,7 @@ class RegistrationController extends AbstractController
         ClientsAuthenticator $authenticator
     ): Response {
         $user = new Clients();
+        $user->setRoles(['ROLE_CLIENT']);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
