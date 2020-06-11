@@ -7,12 +7,12 @@ use App\Entity\Orders;
 use App\Form\OrdersType;
 use App\Repository\OrdersRepository;
 use DateTimeZone;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -39,14 +39,13 @@ class OrdersController extends AbstractController
     }
 
     /**
-     * @Route("/byclient/{id}", name="orders_byclient", methods={"GET"})
+     * @Route("/my-orders", name="orders_byclient", methods={"GET"})
      */
-    public function showById(
-        OrdersRepository $ordersRepository,
-        Clients $client
-    ): Response {
+    public function showById(OrdersRepository $ordersRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
         return $this->render('orders/index.html.twig', [
-            'orders' => $ordersRepository->findByClient($client),
+            'orders' => $ordersRepository->findByClient($this->getUser()),
         ]);
     }
 
@@ -73,11 +72,15 @@ class OrdersController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from(new Address('bigred@christophecraig.com', 'Big Red'))
                 ->to($this->getUser()->getUsername())
                 ->subject('Your order is now waiting for confirmation!')
-                ->text('Super, sublime, excellent!');
+                ->htmlTemplate('email/placedOrder.html.twig')
+                ->context([
+                    'order' => $order,
+                    'user' => $this->getUser(),
+                ]);
             $mailer->send($email);
 
             return $this->redirectToRoute('home');
