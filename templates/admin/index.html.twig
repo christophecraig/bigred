@@ -88,9 +88,11 @@
         <p>
           Status: {{ order.status }}
         </p>
+        {% if order.status is same as('pending') %}
         <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter })}}" class="button is-success">Confirm</a>
         <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}" class="button is-warning">Reschedule</a>
         <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled', filter: filter})}}" class="button is-danger">Cancel</a>
+        {% endif %}
       </li>
     {% else %}
 
