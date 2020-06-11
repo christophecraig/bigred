@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Clients;
-use App\Entity\Orders;
 use App\Form\ClientsType;
 use App\Repository\ClientsRepository;
 use App\Repository\OrdersRepository;
@@ -14,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/clients")
@@ -109,12 +109,15 @@ class ClientsController extends AbstractController
     /**
      * @Route("/change-password", name="change_password", methods={"GET","POST"})
      */
-    public function changePassword(Request $request)
-    {
-        $client = $this->getUser();
+    public function changePassword(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
+        $user = $this->getUser();
 
-        $form = $this->createFormBuilder($client)
-            ->add('plainPassword', RepeatedType::class, [
+        $form = $this->createFormBuilder($user)
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'New Password'],
                 'second_options' => ['label' => 'Repeat New Password'],
@@ -124,10 +127,16 @@ class ClientsController extends AbstractController
             ])
             ->getForm();
 
+        $form->handleRequest($request);
         // TODO : process form
 
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $user->setPassword(
+        //         $passwordEncoder->encodePassword($form->get('password'), $user)
+        //     );
+        // }
         return $this->render('clients/change_password.html.twig', [
-            'client' => $client,
+            'client' => $user,
             'form' => $form->createView(),
         ]);
     }
