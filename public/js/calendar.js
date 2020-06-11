@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (cell) {
                             cell.style = "background-color: red!important; cursor: unset; margin-bottom: 0!important;";
                             cell.onclick = "";
+                            cell.innerText = "Unavailable";
                         }
                     }
                 }
