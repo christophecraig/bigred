@@ -9,7 +9,7 @@
       {% endblock %}
     </title>
     {# <link rel="icon" type="image/png" href="/myicon.png" /> #}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css"
       rel="stylesheet"
       type="text/css" />
     {% block stylesheets %}
@@ -23,15 +23,11 @@
         {{ message }}
       </div>
     {% endfor %}
-    <section class="container is-widescreen">
-      <div class="card">
-        <div class="card-content">
-          {% block body %}
+    <div class="container is-widescreen">
+      {% block body %}
 
-          {% endblock %}
-        </div>
-      </div>
-    </section>
+      {% endblock %}
+    </div>
     {% block javascripts %}
       <script src="https://kit.fontawesome.com/20c465eb55.js"></script>
     {% endblock %}
