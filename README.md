@@ -1,6 +1,6 @@
 # bigred
 
-to run: 
+to run after cloning: 
 
 
 * `composer update`
