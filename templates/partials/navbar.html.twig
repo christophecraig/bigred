@@ -4,22 +4,23 @@
       <img src="/assets/firewood.png" />
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" onclick="toggleBurgerMenu(event.target)">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="navbar" class="navbar-menu">
     <div class="navbar-start">
-      <a href="/" class="navbar-item">
+      <a href="{{ path('home')}}" class="navbar-item">
         Home
       </a>
+      <a href="{{ path('about')}}" class="navbar-item">
+        About
+      </a>
       </div>
-    </div>
-
-    <div class="navbar-end">
+      <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
           {% if app.user %}
@@ -41,4 +42,5 @@
       </div>
     </div>
   </div>
+    </div>
 </nav>
