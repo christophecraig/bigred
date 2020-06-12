@@ -18,12 +18,17 @@
   </head>
   <body>
     {% include 'partials/navbar.html.twig' %}
-    {% for message in app.flashes('success') %}
-      <div class="flash-notice">
-        {{ message }}
-      </div>
-    {% endfor %}
     <div class="container is-widescreen">
+      {% for message in app.flashes('success') %}
+        <div class="notification is-success">
+          <button class="delete"
+            onclick="this.parentElement.style.display='none'">
+
+          </button>
+          {{ message }}
+        </div>
+      {% endfor %}
+
       {% block body %}
 
       {% endblock %}
