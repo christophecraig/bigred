@@ -9,69 +9,69 @@
     <div class="column is-one-third is-offset-one-third">
       <div class="card">
         <div class="card-content">
-          <form method="post">
-            {% if error %}
-              <div class="alert alert-danger">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-              </div>
-            {% endif %}
+          {% if app.user %}
+            <div class="mb-3">
+              You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+          {% else %}
+            <form method="post">
+              {% if error %}
+                <div class="alert alert-danger">
+                  {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+              {% endif %}
 
-            {% if app.user %}
-              <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+              <h1 class="title is-2">
+                Sign in
+              </h1>
+              <div class="field">
+                <label class="label" for="inputEmail">Email</label>
+                <div class="control has-icons-right">
+                  <input type="email"
+                    value="{{ last_username }}"
+                    name="email"
+                    id="inputEmail"
+                    class="input"
+                    required
+                    autofocus />
+                  <span class="icon is-right">
+                    <i class="fas fa-envelope has-text-grey"></i>
+                  </span>
+                </div>
               </div>
-            {% endif %}
-
-            <h1 class="title is-2">
-              Sign in
-            </h1>
-            <div class="field">
-              <label class="label" for="inputEmail">Email</label>
-              <div class="control has-icons-right">
-                <input type="email"
-                  value="{{ last_username }}"
-                  name="email"
-                  id="inputEmail"
-                  class="input"
-                  required
-                  autofocus />
-                <span class="icon is-right">
-                  <i class="fas fa-envelope has-text-grey"></i>
-                </span>
+              <div class="field">
+                <label class="label" for="inputPassword">Password</label>
+                <div class="control has-icons-right">
+                  <input type="password"
+                    name="password"
+                    id="inputPassword"
+                    class="form-control input"
+                    required />
+                  <span class="icon is-right">
+                    <i class="fas fa-lock has-text-grey"></i>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <label class="label" for="inputPassword">Password</label>
-              <div class="control has-icons-right">
-                <input type="password"
-                  name="password"
-                  id="inputPassword"
-                  class="form-control input"
-                  required />
-                <span class="icon is-right">
-                  <i class="fas fa-lock has-text-grey"></i>
-                </span>
+              <input type="hidden"
+                name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}" />
+              <div class="field">
+                <button class="button is-primary" type="submit">Sign in</button>
               </div>
+            </form>
+            <hr />
+            <div class="has-text-centered">
+              <a href="{{ path('app_forgot_password_request') }}">
+                Forgot your password ?
+              </a>
             </div>
-            <input type="hidden"
-              name="_csrf_token"
-              value="{{ csrf_token('authenticate') }}" />
-            <div class="field">
-              <button class="button is-primary" type="submit">Sign in</button>
+            <hr />
+            <div class="has-text-centered">
+              <a href="{{ path('app_register') }}">
+                Don't have an account ? Sign up !
+              </a>
             </div>
-          </form>
-          <hr />
-          <div class="has-text-centered">
-            <a href="{{ path('app_forgot_password_request') }}">
-              Forgot your password ?
-            </a>
-          </div>
-          <hr />
-          <div class="has-text-centered">
-            <a href="{{ path('app_register') }}">
-              Don't have an account ? Sign up !
-            </a>
-          </div>
+          {% endif %}
         </div>
       </div>
     </div>
