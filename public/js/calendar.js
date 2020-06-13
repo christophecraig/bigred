@@ -30,7 +30,7 @@ const ordersDates = {
     'morning': morningOrders,
     'afternoon': afternoonOrders,
 };
-console.log(ordersDates);
+
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     const today = new Date();
@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         `;
             }
         },
+        hiddenDays: [0, 2, 4, 6],
         plugins: ['dayGrid', 'timeGrid']
     });
 
