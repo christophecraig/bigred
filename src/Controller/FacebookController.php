@@ -29,7 +29,7 @@ class FacebookController extends AbstractController
 
         try {
             $accessToken = $helper->getAccessToken(
-                'https://dev.christophecraig.com/about'
+                'https://dev.christophecraig.com/facebook'
             );
         } catch (FacebookResponseException $e) {
             // When Graph returns an error
