@@ -22,6 +22,7 @@ class AboutController extends AbstractController
             'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
             'default_graph_version' => 'v7.0',
             'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
+            'persistent_data_handler' => 'session',
         ]);
 
         $helper = $fb->getRedirectLoginHelper();

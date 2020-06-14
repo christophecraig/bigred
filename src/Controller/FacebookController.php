@@ -22,6 +22,7 @@ class FacebookController extends AbstractController
             'app_id' => $_ENV['FACEBOOK_APP_ID'],
             'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
             'default_graph_version' => 'v7.0',
+            'default_acess_token' => $_ENV['FACEBOOK_APP_TOKEN'],
             'persistent_data_handler' => 'session',
         ]);
 
