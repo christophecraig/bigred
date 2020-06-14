@@ -90,7 +90,7 @@ class FacebookController extends AbstractController
             }
 
             echo '<h3>Long-lived</h3>';
-            var_dump($accessToken->getValue());
+            var_dump($accessToken);
         }
 
         $this->$_SESSION['fb_access_token'] = (string) $accessToken;
