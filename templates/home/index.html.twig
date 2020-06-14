@@ -53,10 +53,12 @@
 {% endblock %}
 
 {% block javascripts %}
+{% if app.user %}
     <script src="/js/fullcalendar/core/main.js"></script>
     <script src="/js/fullcalendar/core/locales/en-nz.js"></script>
     <script src="/js/fullcalendar/daygrid/main.js"></script>
     <script src="/js/fullcalendar/timegrid/main.js"></script>
     <script>const orders = {{ orders | raw }};</script>
     <script src="/js/calendar.js"></script>
+    {% endif %}
 {% endblock %}
