@@ -67,8 +67,6 @@ class FacebookController extends AbstractController
 
         // Get the access token metadata from /debug_token
         $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-        echo '<h3>Metadata</h3>';
-        var_dump($tokenMetadata);
 
         // Validation (these will throw FacebookSDKException's when they fail)
         $tokenMetadata->validateAppId($_ENV['FACEBOOK_APP_ID']); // Replace {app-id} with your app id

@@ -24,28 +24,29 @@ class AboutController extends AbstractController
             'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
             'persistent_data_handler' => 'session',
         ]);
+        if (!$session->has('fb_access_token')) {
+            $helper = $fb->getRedirectLoginHelper();
 
-        $helper = $fb->getRedirectLoginHelper();
+            $permissions = ['email', 'public_profile', 'pages_messaging']; // Optional permissions
+            $callbackUrl = htmlspecialchars(
+                'https://dev.christophecraig.com/facebook'
+            );
+            $loginUrl = $helper->getLoginUrl($callbackUrl, $permissions);
 
-        $permissions = ['email', 'public_profile', 'pages_messaging']; // Optional permissions
-        $callbackUrl = htmlspecialchars(
-            'https://dev.christophecraig.com/facebook'
-        );
-        $loginUrl = $helper->getLoginUrl($callbackUrl, $permissions);
-
-        echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
-
-        try {
-            // Returns a `FacebookFacebookResponse` object
-            $response = $fb->get('/me');
-        } catch (FacebookResponseException $e) {
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit();
-        } catch (FacebookSDKException $e) {
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit();
+            echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+        } else {
+            try {
+                // Returns a `FacebookFacebookResponse` object
+                $response = $fb->get('/me');
+            } catch (FacebookResponseException $e) {
+                echo 'Graph returned an error: ' . $e->getMessage();
+                exit();
+            } catch (FacebookSDKException $e) {
+                echo 'Facebook SDK returned an error: ' . $e->getMessage();
+                exit();
+            }
+            $graphNode = $response->getGraphNode();
         }
-        $graphNode = $response->getGraphNode();
 
         return $this->render('about/index.html.twig', [
             'controller_name' => 'AboutController',
