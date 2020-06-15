@@ -48,11 +48,10 @@ class AboutController extends AbstractController
                 echo 'Facebook SDK returned an error: ' . $e->getMessage();
                 exit();
             }
-            $permisisons = $fb->get(
+            $permissions = $fb->get(
                 '/me/permissions',
                 $session->get('fb_access_token')
             );
-            var_dump($permisisons->getBody());
             $graphNode = $response->getGraphNode();
         }
 
