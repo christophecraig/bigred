@@ -30,7 +30,7 @@ class FacebookController extends AbstractController
 
         try {
             $accessToken = $helper->getAccessToken(
-                'https://dev.christophecraig.com/facebook'
+                AboutController::BASE_URL . '/facebook'
             );
         } catch (FacebookResponseException $e) {
             // When Graph returns an error

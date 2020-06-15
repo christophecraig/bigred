@@ -5,11 +5,31 @@
 {% endblock %}
 
 {% block body %}
-  {# <script>
-    window.fbAsyncInit = function() { FB.init({ appId : 'your-app-id',
-    autoLogAppEvents : true, xfbml : true, version : 'v7.0' }); };
-  </script>
-  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script> #}
+<!-- Load Facebook SDK for JavaScript -->
+      <div id="fb-root"></div>
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            xfbml            : true,
+            version          : 'v7.0'
+          });
+        };
+
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <!-- Your Chat Plugin code -->
+      <div class="fb-customerchat"
+        attribution=setup_tool
+        page_id="283620859105921"
+  logged_in_greeting="Hi! Click here to enable order notifications in messenger!"
+  logged_out_greeting="Hi! Click here to enable order notifications in messenger!">
+      </div>
 
   <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
@@ -36,6 +56,13 @@
           </a></code>
       </li>
     </ul>
-    {{ dump(fb) }}
+    {{ fb.name }} {{ fb.id }} {{ fb.email }}
+    <hr />
+    {# <div class="fb-send-to-messenger"
+      messenger_app_id="2743452592557910"
+      cta_text="SEND_ME_UPDATES"
+      page_id="283620859105921">
+      Send
+    </div> #}
   </div>
 {% endblock %}

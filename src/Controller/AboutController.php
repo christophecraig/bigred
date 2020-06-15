@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AboutController extends AbstractController
 {
+    // const BASE_URL = 'https://dev.christophecraig.com';
+    const BASE_URL = 'https://localhost:8000';
     /**
      * @Route("/about", name="about")
      */
@@ -28,16 +30,17 @@ class AboutController extends AbstractController
             $helper = $fb->getRedirectLoginHelper();
 
             $permissions = ['email', 'public_profile', 'pages_messaging']; // Optional permissions
-            $callbackUrl = htmlspecialchars(
-                'https://dev.christophecraig.com/facebook'
-            );
+            $callbackUrl = htmlspecialchars(self::BASE_URL . '/facebook');
             $loginUrl = $helper->getLoginUrl($callbackUrl, $permissions);
 
             echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
         } else {
             try {
                 // Returns a `FacebookFacebookResponse` object
-                $response = $fb->get('/me', $session->get('fb_access_token'));
+                $response = $fb->get(
+                    '/me?fields=name,id,email,picture',
+                    $session->get('fb_access_token')
+                );
             } catch (FacebookResponseException $e) {
                 echo 'Graph returned an error: ' . $e->getMessage();
                 exit();
@@ -45,12 +48,17 @@ class AboutController extends AbstractController
                 echo 'Facebook SDK returned an error: ' . $e->getMessage();
                 exit();
             }
+            $permisisons = $fb->get(
+                '/me/permissions',
+                $session->get('fb_access_token')
+            );
+            var_dump($permisisons->getBody());
             $graphNode = $response->getGraphNode();
         }
 
         return $this->render('about/index.html.twig', [
             'controller_name' => 'AboutController',
-            'fb' => $graphNode,
+            'fb' => isset($graphNode) ? $graphNode : [],
         ]);
     }
 }
