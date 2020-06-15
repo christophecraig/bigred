@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AboutController extends AbstractController
 {
-    // const BASE_URL = 'https://dev.christophecraig.com';
-    const BASE_URL = 'https://localhost:8000';
+    const BASE_URL = 'https://dev.christophecraig.com';
+    // const BASE_URL = 'https://localhost:8000';
     /**
      * @Route("/about", name="about")
      */
