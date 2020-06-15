@@ -50,7 +50,7 @@ class AboutController extends AbstractController
 
         return $this->render('about/index.html.twig', [
             'controller_name' => 'AboutController',
-            'fb' => $response,
+            'fb' => $graphNode,
         ]);
     }
 }
