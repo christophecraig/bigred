@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<!-- Load Facebook SDK for JavaScript -->
+  {# <!-- Load Facebook SDK for JavaScript -->
       <div id="fb-root"></div>
       <script>
         window.fbAsyncInit = function() {
@@ -33,7 +33,24 @@
         page_id="283620859105921"
   logged_in_greeting="Hi! Click here to enable order notifications in messenger!"
   logged_out_greeting="Hi! Click here to enable order notifications in messenger!">
-      </div>
+      </div> #}
+
+      <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '2743452592557910',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v7.0'
+    });
+
+          FB.Event.subscribe('send_to_messenger', function(e) {
+            console.log(e)
+
+      });
+  };
+</script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
   <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
@@ -62,11 +79,9 @@
     </ul>
     {{ fb.name }} {{ fb.id }} {{ fb.email }}
     <hr />
-    {# <div class="fb-send-to-messenger"
+    <div class="fb-send-to-messenger"
       messenger_app_id="2743452592557910"
       cta_text="SEND_ME_UPDATES"
-      page_id="283620859105921">
-      Send
-    </div> #}
+      page_id="283620859105921"></div>
   </div>
 {% endblock %}
