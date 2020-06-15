@@ -35,22 +35,8 @@
   logged_out_greeting="Hi! Click here to enable order notifications in messenger!">
       </div> #}
 
-      <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId            : '2743452592557910',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v7.0'
-    });
-
-          FB.Event.subscribe('send_to_messenger', function(e) {
-            console.log(e)
-
-      });
-  };
-</script>
-<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <script src="js/facebook.js"></script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
   <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
