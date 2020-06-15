@@ -37,7 +37,7 @@ class AboutController extends AbstractController
         } else {
             try {
                 // Returns a `FacebookFacebookResponse` object
-                $response = $fb->get('/me');
+                $response = $fb->get('/me', $session->get('fb_access_token'));
             } catch (FacebookResponseException $e) {
                 echo 'Graph returned an error: ' . $e->getMessage();
                 exit();
