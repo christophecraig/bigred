@@ -22,7 +22,7 @@ class WebhookController extends AbstractController
             $token = $request->get('hub_verify_token');
             $challenge = $request->get('hub_challenge');
             file_put_contents(
-                '/home/crch1223/dev.christophecraig.com/logs.log',
+                __DIR__ . '/logs.log',
                 $request->getQueryString(),
                 FILE_APPEND
             );
@@ -35,6 +35,7 @@ class WebhookController extends AbstractController
 
                     $response = new Response($challenge);
                     $response->send();
+                    return $this->redirectToRoute('about');
                 } else {
                     // Responds with '403 Forbidden' if verify tokens do not match
                     return new Response('', 403);
@@ -43,5 +44,6 @@ class WebhookController extends AbstractController
                 return new Response('', 403);
             }
         }
+        return $this->render('webhook/index.html.twig', []);
     }
 }
