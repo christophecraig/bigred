@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     /**
-     * @Route("/webhook", name="webhook", method={"GET","POST"})
+     * @Route("/webhook", name="webhook", methods={"GET","POST"})
      */
     public function index(Request $request)
     {
