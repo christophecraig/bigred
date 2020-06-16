@@ -18,10 +18,14 @@ class WebhookController extends AbstractController
             //Write code to listen webhook request
         } else {
             $VERIFY_TOKEN = 'sublime1234';
-            $mode = $_REQUEST['hub_mode'];
-            $token = $_REQUEST['hub_verify_token'];
-            $challenge = $_REQUEST['hub_challenge'];
-
+            $mode = $request->get('hub_mode');
+            $token = $request->get('hub_verify_token');
+            $challenge = $request->get('hub_challenge');
+            file_put_contents(
+                '/home/crch1223/dev.christophecraig.com/logs.log',
+                $request->getQueryString(),
+                FILE_APPEND
+            );
             if ($mode && $token) {
                 // Checks the mode and token sent is correct
                 if ($mode === 'subscribe' && $token === $VERIFY_TOKEN) {
