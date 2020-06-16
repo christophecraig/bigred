@@ -14,8 +14,11 @@ class WebhookController extends AbstractController
      */
     public function index(Request $request)
     {
+        $response = new Response();
         if ($request->getMethod() == 'POST') {
             //Write code to listen webhook request
+            $response->create('EVENT_RECEIVED', 200);
+            $response->send();
         } else {
             $VERIFY_TOKEN = 'sublime1234';
             $mode = $request->get('hub_mode');
@@ -33,9 +36,8 @@ class WebhookController extends AbstractController
 
                     // console . log('WEBHOOK_VERIFIED');
 
-                    $response = new Response($challenge);
+                    $response->create($challenge, 200);
                     $response->send();
-                    return $this->redirectToRoute('about');
                 } else {
                     // Responds with '403 Forbidden' if verify tokens do not match
                     return new Response('', 403);
