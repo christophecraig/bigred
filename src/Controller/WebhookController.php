@@ -21,9 +21,9 @@ class WebhookController extends AbstractController
             $response->send();
         } else {
             $VERIFY_TOKEN = 'sublime1234';
-            $mode = $request->get('hub_mode');
-            $token = $request->get('hub_verify_token');
-            $challenge = $request->get('hub_challenge');
+            $mode = $request->get('hub.mode');
+            $token = $request->get('hub.verify_token');
+            $challenge = $request->get('hub.challenge');
             file_put_contents(
                 __DIR__ . '/logs.log',
                 $request->getQueryString(),
