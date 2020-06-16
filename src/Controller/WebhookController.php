@@ -12,7 +12,7 @@ class WebhookController extends AbstractController
     /**
      * @Route("/webhook", name="webhook", method={"GET,POST"})
      */
-    public function index(Request $request): Response
+    public function index(Request $request)
     {
         if ($request->getMethod() == 'POST') {
             //Write code to listen webhook request
@@ -28,7 +28,9 @@ class WebhookController extends AbstractController
                     // Responds with the challenge token from the request
 
                     // console . log('WEBHOOK_VERIFIED');
-                    return new Response($challenge);
+
+                    $response = new Response($challenge);
+                    $response->send();
                 } else {
                     // Responds with '403 Forbidden' if verify tokens do not match
                     return new Response('', 403);
