@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WebhookController extends AbstractController
@@ -10,9 +12,9 @@ class WebhookController extends AbstractController
     /**
      * @Route("/webhook", name="webhook", method={"GET,POST"})
      */
-    public function index()
+    public function index(Request $request): Response
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($request->getMethod() == 'POST') {
             //Write code to listen webhook request
         } else {
             $VERIFY_TOKEN = 'sublime1234';
@@ -26,14 +28,13 @@ class WebhookController extends AbstractController
                     // Responds with the challenge token from the request
 
                     // console . log('WEBHOOK_VERIFIED');
-                    echo $challenge;
-                    http_response_code(200);
+                    return new Response($challenge);
                 } else {
                     // Responds with '403 Forbidden' if verify tokens do not match
-                    http_response_code(403);
+                    return new Response('', 403);
                 }
             } else {
-                http_response_code(403);
+                return new Response('', 403);
             }
         }
     }
