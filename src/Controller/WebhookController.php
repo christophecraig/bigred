@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     /**
-     * @Route("/webhook", name="webhook", method={"POST"})
+     * @Route("/webhook", name="webhook", method={"GET,POST"})
      */
     public function index()
     {
@@ -28,6 +28,7 @@ class WebhookController extends AbstractController
                 // Checks the mode and token sent is correct
                 if ($mode === 'subscribe' && $token === $VERIFY_TOKEN) {
                     // Responds with the challenge token from the request
+                    var_dump('WEBHOOK_VERIFIED');
                     // console . log('WEBHOOK_VERIFIED');
                     echo $challenge;
                     http_response_code(200);
