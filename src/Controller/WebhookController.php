@@ -24,11 +24,7 @@ class WebhookController extends AbstractController
             $mode = $request->get('hub.mode');
             $token = $request->get('hub.verify_token');
             $challenge = $request->get('hub.challenge');
-            file_put_contents(
-                __DIR__ . '/logs.log',
-                $request->getQueryString(),
-                FILE_APPEND
-            );
+
             if ($mode && $token) {
                 // Checks the mode and token sent is correct
                 if ($mode === 'subscribe' && $token === $VERIFY_TOKEN) {
