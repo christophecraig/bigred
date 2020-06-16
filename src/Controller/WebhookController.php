@@ -39,6 +39,5 @@ class WebhookController extends AbstractController
                 http_response_code(403);
             }
         }
-        return $this->render('webhook/index.html.twig', []);
     }
 }
