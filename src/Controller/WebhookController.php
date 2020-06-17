@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     /**
+     * Just used by facebook to verify the webhook
      * @Route("/webhook", name="webhook", methods={"GET"})
      */
     public function index()

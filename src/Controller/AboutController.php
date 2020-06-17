@@ -32,8 +32,6 @@ class AboutController extends AbstractController
             $permissions = ['email', 'public_profile', 'pages_messaging']; // Optional permissions
             $callbackUrl = htmlspecialchars(self::BASE_URL . '/facebook');
             $loginUrl = $helper->getLoginUrl($callbackUrl, $permissions);
-
-            echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
         } else {
             try {
                 // Returns a `FacebookFacebookResponse` object
@@ -58,6 +56,7 @@ class AboutController extends AbstractController
         return $this->render('about/index.html.twig', [
             'controller_name' => 'AboutController',
             'fb' => isset($graphNode) ? $graphNode : [],
+            'login_url' => $loginUrl,
         ]);
     }
 }
