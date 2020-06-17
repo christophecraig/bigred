@@ -17,12 +17,10 @@ class WebhookController extends AbstractController
     {
         $verifyToken = 'sublime1234';
         if (
-            $_GET['hub.mode'] === 'subscribe' &&
-            $_GET['hub.verify_token'] == $verifyToken
+            $_GET['hub_mode'] === 'subscribe' &&
+            $_GET['hub_verify_token'] == $verifyToken
         ) {
-            return new Response($_GET['hub.challenge'], 200, [
-                'content-type' => 'text/plain',
-            ]);
+            return new Response($_GET['hub_challenge'], 200);
         } else {
             return new Response('essaye encore', 403);
         }
