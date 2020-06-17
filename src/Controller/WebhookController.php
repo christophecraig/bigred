@@ -15,19 +15,14 @@ class WebhookController extends AbstractController
      */
     public function index()
     {
-        $response = new Response();
         $verifyToken = 'sublime1234';
-        // $logger->debug('$_GET: ', $_GET);
         if (
             $_GET['hub.mode'] === 'subscribe' &&
-            $_GET['hub.verify_token'] === $verifyToken
+            $_GET['hub.verify_token'] == $verifyToken
         ) {
-            // $logger->debug('yessss');
-            $response->setContent($_GET['hub.challenge']);
-            $response->setStatusCode(200);
-            return $response;
+            return new Response($_GET['hub.challenge'], 200);
         } else {
-            return $response->setStatusCode(403);
+            return new Response('essaye encore', 403);
         }
     }
 }
