@@ -14,34 +14,16 @@ class WebhookController extends AbstractController
      */
     public function index(Request $request)
     {
-        $response = new Response();
-        if ($request->getMethod() == 'POST') {
-            //Write code to listen webhook request
-            $response->create('EVENT_RECEIVED', 200);
-            $response->send();
+        $verifyToken = 'sublime1234';
+
+        if (
+            $request->get('hub.mode') === 'subscribe' &&
+            $request->get('hub.verify_token') === $verifyToken
+        ) {
+            echo $request->get('hub.challenge');
+            http_response_code(200);
         } else {
-            $VERIFY_TOKEN = 'sublime1234';
-            $mode = $request->get('hub.mode');
-            $token = $request->get('hub.verify_token');
-            $challenge = $request->get('hub.challenge');
-
-            if ($mode && $token) {
-                // Checks the mode and token sent is correct
-                if ($mode === 'subscribe' && $token === $VERIFY_TOKEN) {
-                    // Responds with the challenge token from the request
-
-                    // console . log('WEBHOOK_VERIFIED');
-
-                    $response->create($challenge, 200);
-                    $response->send();
-                } else {
-                    // Responds with '403 Forbidden' if verify tokens do not match
-                    return new Response('', 403);
-                }
-            } else {
-                return new Response('', 403);
-            }
+            http_response_code(403);
         }
-        return $this->render('webhook/index.html.twig', []);
     }
 }
