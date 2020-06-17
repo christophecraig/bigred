@@ -20,7 +20,9 @@ class WebhookController extends AbstractController
             $_GET['hub.mode'] === 'subscribe' &&
             $_GET['hub.verify_token'] == $verifyToken
         ) {
-            return new Response($_GET['hub.challenge'], 200);
+            return new Response($_GET['hub.challenge'], 200, [
+                'content-type' => 'text/plain',
+            ]);
         } else {
             return new Response('essaye encore', 403);
         }
