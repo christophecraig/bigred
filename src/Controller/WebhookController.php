@@ -10,18 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     /**
-     * @Route("/webhook", name="webhook", methods={"GET","POST"})
+     * @Route("/webhook", name="webhook", methods={"GET"})
      */
-    public function index(Request $request)
+    public function index()
     {
+        $request = Request::createFromGlobals();
         $verifyToken = 'sublime1234';
 
         if (
             $request->get('hub.mode') === 'subscribe' &&
             $request->get('hub.verify_token') === $verifyToken
         ) {
-            echo $request->get('hub.challenge');
-            http_response_code(200);
+            return $this->json($request->get('hub.challenge'), 200);
         } else {
             http_response_code(403);
         }
