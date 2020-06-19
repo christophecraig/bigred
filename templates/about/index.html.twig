@@ -33,7 +33,9 @@
           </a></code>
       </li>
     </ul>
-    {{ fb.name }} {{ fb.id }} {{ fb.email }}
+    {% if fb %}
+      {{ fb.name }} {{ fb.id }} {{ fb.email }}
+    {% endif %}
     <hr />
     <a href="{{ login_url }}">Log in with facebook !</a>
     <div class="fb-send-to-messenger"
