@@ -57,7 +57,7 @@ class AboutController extends AbstractController
         return $this->render('about/index.html.twig', [
             'controller_name' => 'AboutController',
             'fb' => isset($graphNode) ? $graphNode : [],
-            'login_url' => $loginUrl,
+            'login_url' => isset($loginUrl) ? $loginUrl : '',
             'permissions' => $permissions,
         ]);
     }
