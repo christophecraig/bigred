@@ -51,7 +51,7 @@ class AboutController extends AbstractController
                 $session->get('fb_access_token')
             );
             $graphNode = $response->getGraphNode();
-            $permissions = $permissions->getGraphNode();
+            $permissions = $permissions->getGraphEdge();
         }
 
         return $this->render('about/index.html.twig', [
