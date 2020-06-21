@@ -46,19 +46,13 @@ class AboutController extends AbstractController
                 echo 'Facebook SDK returned an error: ' . $e->getMessage();
                 exit();
             }
-            $permissions = $fb->get(
-                '/me/permissions',
-                $session->get('fb_access_token')
-            );
             $graphNode = $response->getGraphNode();
-            $permissions = $permissions->getGraphEdge();
         }
 
         return $this->render('about/index.html.twig', [
             'controller_name' => 'AboutController',
             'fb' => isset($graphNode) ? $graphNode : [],
             'login_url' => isset($loginUrl) ? $loginUrl : '',
-            'permissions' => $permissions,
         ]);
     }
 }

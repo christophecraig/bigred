@@ -36,10 +36,7 @@
       </li>
     </ul>
     {% if fb %}
-      {{ fb.name }} {{ fb.id }} {{ fb.email }}
-    {% endif %}
-    {% if permissions %}
-      {{ dump(permissions) }}
+      {{ dump(fb) }}
     {% endif %}
     <hr />
     <a href="{{ login_url }}">Log in with facebook !</a>
