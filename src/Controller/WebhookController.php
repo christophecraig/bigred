@@ -30,9 +30,21 @@ class WebhookController extends AbstractController
             $requestBody = file_get_contents('php://input');
             file_put_contents(
                 'logs.log',
-                print_r($requestBody, true),
+                print_r(json_decode($requestBody), true),
                 FILE_APPEND
             );
+
+            // This in a post to /me/messages worked in the fb explorer
+            // {
+            //     "messaging_type": "UPDATE",
+            //     "recipient": {
+            //       "id": "2754187091352898"
+            //     },
+            //     "message": {
+            //       "text": "superrrr"
+            //     }
+            //   }
+            // $psid = $requestBody[''];
             return new Response('', 200);
         }
     }
