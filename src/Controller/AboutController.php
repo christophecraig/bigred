@@ -28,15 +28,22 @@ class AboutController extends AbstractController
         ]);
         if (!$session->has('fb_access_token')) {
             $helper = $fb->getRedirectLoginHelper();
-
-            $permissions = ['email', 'public_profile', 'pages_messaging']; // Optional permissions
+            // /{user-id}
+            // ?fields=name,age_range,ids_for_apps,ids_for_pages
+            // &access_token=[app_access_token]
+            $permissions = [
+                'email',
+                'public_profile',
+                'pages_messaging',
+                'ids_for_pages',
+            ]; // Optional permissions
             $callbackUrl = htmlspecialchars(self::BASE_URL . '/facebook');
             $loginUrl = $helper->getLoginUrl($callbackUrl, $permissions);
         } else {
             try {
                 // Returns a `FacebookFacebookResponse` object
                 $response = $fb->get(
-                    '/me?fields=name,id,email,picture',
+                    '/me?fields=name,id,email,picture,ids_for_pages',
                     $session->get('fb_access_token')
                 );
             } catch (FacebookResponseException $e) {
