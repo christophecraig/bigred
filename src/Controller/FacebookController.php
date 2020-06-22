@@ -80,6 +80,7 @@ class FacebookController extends AbstractController
                 $accessToken = $oAuth2Client->getLongLivedAccessToken(
                     $accessToken
                 );
+                $fb->setDefaultAccessToken($accessToken);
             } catch (FacebookSDKException $e) {
                 echo '<p>Error getting long-lived access token: ' .
                     $e->getMessage() .
