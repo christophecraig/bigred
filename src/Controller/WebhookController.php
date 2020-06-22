@@ -27,12 +27,9 @@ class WebhookController extends AbstractController
                 return new Response('essaye encore', 403);
             }
         } else {
-            $requestBody = file_get_contents('php://input');
-            file_put_contents(
-                'logs.log',
-                print_r(json_decode($requestBody), true),
-                FILE_APPEND
-            );
+            $requestBody = json_decode(file_get_contents('php://input'));
+            $psid = $requestBody->entry[0]->messaging[0]->sender->id;
+            file_put_contents('logs.log', print_r($psid, true), FILE_APPEND);
 
             // This in a post to /me/messages worked in the fb explorer
             // {
@@ -44,7 +41,6 @@ class WebhookController extends AbstractController
             //       "text": "superrrr"
             //     }
             //   }
-            // $psid = $requestBody[''];
             return new Response('', 200);
         }
     }
