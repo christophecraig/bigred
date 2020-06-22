@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Facebook\Facebook;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WebhookController extends AbstractController
@@ -40,13 +42,32 @@ class WebhookController extends AbstractController
             ]);
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
             if ($session->has('fb_access_token')) {
-                $fb->post(
-                    '/me/messages',
-                    json_decode(
-                        '{"messaging_type": "UPDATE", "recipient": {"id": "2754187091352898"},"message": {"text": "superrrr"}}'
-                    ),
-                    $session->get('fb_access_token')
-                );
+                try {
+                    // Returns a `FacebookFacebookResponse` object
+                    $response = $fb->post(
+                        '/me/messages',
+                        [
+                            'messaging_type' => 'UPDATE',
+                            'recipient' =>
+                                '{
+                          "id": "' .
+                                $psid .
+                                '"
+                        }',
+                            'message' => '{
+                          "text": "Merci beaucoup"
+                        }',
+                        ],
+                        $session->get('fb_access_token')
+                    );
+                } catch (FacebookResponseException $e) {
+                    echo 'Graph returned an error: ' . $e->getMessage();
+                    exit();
+                } catch (FacebookSDKException $e) {
+                    echo 'Facebook SDK returned an error: ' . $e->getMessage();
+                    exit();
+                }
+                $graphNode = $response->getGraphNode();
             }
 
             // This in a post to /me/messages worked in the fb explorer
