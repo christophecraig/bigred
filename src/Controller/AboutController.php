@@ -60,7 +60,6 @@ class AboutController extends AbstractController
             'controller_name' => 'AboutController',
             'fb' => isset($graphNode) ? $graphNode : [],
             'login_url' => isset($loginUrl) ? $loginUrl : '',
-            'psid' => $psid,
         ]);
     }
 }
