@@ -42,15 +42,9 @@ class WebhookController extends AbstractController
             if ($session->has('fb_access_token')) {
                 $fb->post(
                     '/me/messages',
-                    [
-                        'messaging_type' => 'UPDATE',
-                        'recipient' => [
-                            'id' => "$psid",
-                        ],
-                        'message' => [
-                            'text' => 'Merci beaucoup',
-                        ],
-                    ],
+                    json_decode(
+                        '{"messaging_type": "UPDATE", "recipient": {"id": "2754187091352898"},"message": {"text": "superrrr"}}'
+                    ),
                     $session->get('fb_access_token')
                 );
             }
