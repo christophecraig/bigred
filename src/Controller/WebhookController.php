@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Facebook\Facebook;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WebhookController extends AbstractController
 {
@@ -14,8 +16,9 @@ class WebhookController extends AbstractController
      * Just used by facebook to verify the webhook
      * @Route("/webhook", name="webhook", methods={"GET", "POST"})
      */
-    public function index()
+    public function index(SessionInterface $session)
     {
+        $session->start();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $verifyToken = 'sublime1234';
             if (
@@ -28,8 +31,29 @@ class WebhookController extends AbstractController
             }
         } else {
             $requestBody = json_decode(file_get_contents('php://input'));
+            $fb = new Facebook([
+                'app_id' => $_ENV['FACEBOOK_APP_ID'],
+                'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
+                'default_graph_version' => 'v7.0',
+                'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
+                'persistent_data_handler' => 'session',
+            ]);
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
-            file_put_contents('logs.log', print_r($psid, true), FILE_APPEND);
+            if ($session->has('fb_access_token')) {
+                $fb->post(
+                    '/me/messages',
+                    [
+                        'messaging_type' => 'UPDATE',
+                        'recipient' => [
+                            'id' => "$psid",
+                        ],
+                        'message' => [
+                            'text' => 'Merci beaucoup',
+                        ],
+                    ],
+                    $session->get('fb_access_token')
+                );
+            }
 
             // This in a post to /me/messages worked in the fb explorer
             // {
