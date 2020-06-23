@@ -78,7 +78,7 @@ class ClientsController extends AbstractController
                 ->getManager()
                 ->flush();
 
-            return $this->redirectToRoute('clients_index');
+            return $this->redirectToRoute('show_account');
         }
 
         return $this->render('clients/edit.html.twig', [
