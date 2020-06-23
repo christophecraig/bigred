@@ -31,12 +31,7 @@ class AboutController extends AbstractController
             // /{user-id}
             // ?fields=name,age_range,ids_for_apps,ids_for_pages
             // &access_token=[app_access_token]
-            $permissions = [
-                'email',
-                'public_profile',
-                'pages_messaging',
-                'ids_for_pages',
-            ]; // Optional permissions
+            $permissions = ['email', 'public_profile', 'pages_messaging']; // Optional permissions
             $callbackUrl = htmlspecialchars(self::BASE_URL . '/facebook');
             $loginUrl = $helper->getLoginUrl($callbackUrl, $permissions);
         } else {
