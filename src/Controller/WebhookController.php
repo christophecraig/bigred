@@ -58,7 +58,7 @@ class WebhookController extends AbstractController
                           "text": "Merci beaucoup"
                         }',
                         ],
-                        $session->get('fb_access_token')
+                        'EAAmZCJ9U8z1YBAF63doj3ZACfZAcgoplwDbiDZCcetZAeofZBXwTDhox8ZCxBcmJPmPwZAPZBU3Oy3q4FZABCkZCnlFwo4UmEEZCfKfhMtdtndAP0YYfQ1Ad6kErmkyuTrlo5ftSA1i8GqpjgZCk0TaWWEmodlAaYoibdzkZAR9w56iKe8xJSGlT40nkqv8qghX3HzL9AZD'
                     );
                 } catch (FacebookResponseException $e) {
                     echo 'Graph returned an error: ' . $e->getMessage();
