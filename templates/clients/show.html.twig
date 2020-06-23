@@ -5,90 +5,53 @@
 {% endblock %}
 
 {% block body %}
-  <h1 class="title">
-    My account
-  </h1>
-
-  <table class="table">
-    <tbody>
-      <tr>
-        <th>
-          First Name
-        </th>
-        <td>
-          {{ client.firstName }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Last Name
-        </th>
-        <td>
-          {{ client.lastName }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Email
-        </th>
-        <td>
-          {{ client.email }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Telephone
-        </th>
-        <td>
-          {{ client.telephone }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Address
-        </th>
-        <td>
-          {{ client.address }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          City
-        </th>
-        <td>
-          {{ client.city }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Code
-        </th>
-        <td>
-          {{ client.code }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          AddressMore
-        </th>
-        <td>
-          {{ client.addressMore }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Verified
-        </th>
-        <td>
-          {{ client.isVerified ? 'Yes' : 'No' }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <a href="{{ path('clients_index') }}">back to list</a>
-
-  <a href="{{ path('clients_edit') }}">edit</a>
-
-  {{ include('clients/_delete_form.html.twig') }}
+  <div class="columns">
+    <div class="column is-half is-offset-one-quarter">
+      <div class="card">
+        <div class="card-content has-text-centered">
+          <h1 class="title">
+            My account
+          </h1>
+          <div>
+            {{ client.firstName ~ ' ' ~ client.lastName }}
+          </div>
+          <div>
+            {{ client.email }} {{ client.isVerified ? '✅' : '' }}
+          </div>
+          <div>
+            {{ client.telephone }}
+          </div>
+          <div class="mt-5 mb-5">
+            <h3 class="title is-5">
+              Address
+            </h3>
+            <p>
+              {{ client.address }} {% if client.addressMore %}
+                ({{ client.addressMore }})
+              {% endif %}
+            </p>
+            <p>
+              {{ client.code }}
+            </p>
+            <p>
+              {{ client.city }}
+            </p>
+          </div>
+          <div class="fb-send-to-messenger"
+            cta_text="SEND_ME_UPDATES"
+            messenger_app_id="2743452592557910"
+            page_id="283620859105921"
+            color="blue"
+            size="large"></div>
+          <div>
+            <a class="button is-fullwidth is-primary mb-3"
+              href="{{ path('clients_edit') }}">
+              Edit
+            </a>
+          </div>
+          {{ include('clients/_delete_form.html.twig') }}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
