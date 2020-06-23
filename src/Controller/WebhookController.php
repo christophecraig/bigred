@@ -20,6 +20,7 @@ class WebhookController extends AbstractController
      */
     public function index(SessionInterface $session)
     {
+        $session->start();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $verifyToken = 'sublime1234';
             if (
@@ -39,13 +40,8 @@ class WebhookController extends AbstractController
                 'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
                 'persistent_data_handler' => 'session',
             ]);
-            $psid = $requestBody['entry'][0]['messaging'][0]['sender']['id'];
-            file_put_contents('logs.log', $psid, FILE_APPEND);
-            file_put_contents(
-                'logs.log',
-                $fb->getDefaultAccessToken(),
-                FILE_APPEND
-            );
+            $psid = $requestBody->entry[0]->messaging[0]->sender->id;
+            // if ($session->has('fb_access_token')) {
             try {
                 // Returns a `FacebookFacebookResponse` object
                 $response = $fb->post(
@@ -54,17 +50,16 @@ class WebhookController extends AbstractController
                         'messaging_type' => 'UPDATE',
                         'recipient' =>
                             '{
-                                "id": "' .
+                          "id": "' .
                             $psid .
                             '"
-                                }',
+                        }',
                         'message' => '{
                           "text": "Merci beaucoup"
                         }',
                     ],
-                    $fb->getDefaultAccessToken()
+                    'EAAmZCJ9U8z1YBAF63doj3ZACfZAcgoplwDbiDZCcetZAeofZBXwTDhox8ZCxBcmJPmPwZAPZBU3Oy3q4FZABCkZCnlFwo4UmEEZCfKfhMtdtndAP0YYfQ1Ad6kErmkyuTrlo5ftSA1i8GqpjgZCk0TaWWEmodlAaYoibdzkZAR9w56iKe8xJSGlT40nkqv8qghX3HzL9AZD'
                 );
-                $graphNode = $response->getGraphNode();
             } catch (FacebookResponseException $e) {
                 echo 'Graph returned an error: ' . $e->getMessage();
                 exit();
@@ -72,6 +67,8 @@ class WebhookController extends AbstractController
                 echo 'Facebook SDK returned an error: ' . $e->getMessage();
                 exit();
             }
+            $graphNode = $response->getGraphNode();
+            // }
 
             // This in a post to /me/messages worked in the fb explorer
             // {
