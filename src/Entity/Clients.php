@@ -113,6 +113,11 @@ class Clients implements UserInterface
      */
     private $orders;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fbPSID;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -335,6 +340,18 @@ class Clients implements UserInterface
                 $order->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFbPSID(): ?string
+    {
+        return $this->fbPSID;
+    }
+
+    public function setFbPSID(?string $fbPSID): self
+    {
+        $this->fbPSID = $fbPSID;
 
         return $this;
     }
