@@ -33,6 +33,12 @@ class WebhookController extends AbstractController
             }
         } else {
             $requestBody = json_decode(file_get_contents('php://input'));
+            // Just logging the body of the request
+            file_put_contents(
+                'logs.log',
+                print_r($requestBody, true),
+                FILE_APPEND
+            );
             $fb = new Facebook([
                 'app_id' => $_ENV['FACEBOOK_APP_ID'],
                 'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
