@@ -99,19 +99,17 @@ class OrdersController extends AbstractController
                 ' ' .
                 $order->getDeliveryTime() .
                 ' is now waiting for confirmation';
-            file_put_contents(
-                'logs.log',
-                print_r($this->getUser(), true),
-                FILE_APPEND
-            );
             try {
                 // Returns a `FacebookFacebookResponse` object
                 $response = $fb->post(
                     '/me/messages',
                     [
                         'messaging_type' => 'UPDATE',
-                        'recipient' => '{
-                          "id": "2754187091352898"
+                        'recipient' =>
+                            '{
+                          "id": "' .
+                            $this->getUser()->getFbPSID() .
+                            '"
                         }',
                         'message' =>
                             '{
