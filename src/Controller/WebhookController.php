@@ -21,6 +21,7 @@ class WebhookController extends AbstractController
     public function index(SessionInterface $session)
     {
         $session->start();
+        // Needed for webhook verification
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $verifyToken = 'sublime1234';
             if (
@@ -48,6 +49,11 @@ class WebhookController extends AbstractController
             ]);
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
             if (isset($requestBody->entry[0]->messaging[0]->optin)) {
+                $client = $this->getUser();
+                $client->setFbPSID($psid);
+                $this->getDoctrine()
+                    ->getManager()
+                    ->flush();
                 $message =
                     'Thank you for subscribing with messenger, you will now receive your order updates directly in this conversation.';
             } else {
