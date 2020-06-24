@@ -95,7 +95,7 @@ class OrdersController extends AbstractController
             // Send confirmation to messenger
             $message =
                 'Your order on the ' .
-                $order->getDeliveryDate() .
+                $order->getDeliveryDate()->format('d/m/y') .
                 ' ' .
                 $order->getDeliveryTime() .
                 ' is now waiting for confirmation';
