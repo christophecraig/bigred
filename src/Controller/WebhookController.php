@@ -50,10 +50,7 @@ class WebhookController extends AbstractController
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
             if (isset($requestBody->entry[0]->messaging[0]->optin)) {
                 $client = $this->getUser();
-                $client->setFbPSID($psid);
-                $this->getDoctrine()
-                    ->getManager()
-                    ->flush();
+                file_put_contents('logs.log', print_r($client), FILE_APPEND);
                 $message =
                     'Thank you for subscribing with messenger, you will now receive your order updates directly in this conversation.';
             } else {
