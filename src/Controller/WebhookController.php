@@ -47,7 +47,7 @@ class WebhookController extends AbstractController
                 'persistent_data_handler' => 'session',
             ]);
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
-            if (isset($requestBody->entry[0]->messaging[0]->option)) {
+            if (isset($requestBody->entry[0]->messaging[0]->optin)) {
                 $message =
                     'Thank you for subscribing with messenger, you will now receive your order updates directly in this conversation.';
             } else {
