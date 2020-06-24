@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use Psr\Log\LoggerInterface;
+use App\Entity\Clients;
+use App\Repository\ClientsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Facebook\Facebook;
@@ -35,11 +35,6 @@ class WebhookController extends AbstractController
         } else {
             $requestBody = json_decode(file_get_contents('php://input'));
             // Just logging the body of the request
-            file_put_contents(
-                'logs.log',
-                print_r($requestBody, true),
-                FILE_APPEND
-            );
             $fb = new Facebook([
                 'app_id' => $_ENV['FACEBOOK_APP_ID'],
                 'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
@@ -49,12 +44,19 @@ class WebhookController extends AbstractController
             ]);
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
             if (isset($requestBody->entry[0]->messaging[0]->optin)) {
-                $client = $this->getUser();
+                $em = $this->getDoctrine()->getManager();
                 file_put_contents(
                     'logs.log',
-                    print_r($client, true),
+                    print_r($requestBody->entry[0]->messaging[0]->optin, true),
                     FILE_APPEND
                 );
+                // Associate the PSID to the client
+                $client = $em
+                    ->getRepository(Clients::class)
+                    ->find($requestBody->entry[0]->messaging[0]->optin->ref);
+                $client->setFbPSID($psid);
+                $em->flush();
+
                 $message =
                     'Thank you for subscribing with messenger, you will now receive your order updates directly in this conversation.';
             } else {
