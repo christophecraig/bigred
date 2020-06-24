@@ -47,6 +47,13 @@ class WebhookController extends AbstractController
                 'persistent_data_handler' => 'session',
             ]);
             $psid = $requestBody->entry[0]->messaging[0]->sender->id;
+            if (isset($requestBody->entry[0]->messaging[0]->option)) {
+                $message =
+                    'Thank you for subscribing with messenger, you will now receive your order updates directly in this conversation.';
+            } else {
+                $message =
+                    'Thank you for contacting us, we will get in touch with you very soon!';
+            }
             // if ($session->has('fb_access_token')) {
             try {
                 // Returns a `FacebookFacebookResponse` object
@@ -60,8 +67,11 @@ class WebhookController extends AbstractController
                             $psid .
                             '"
                         }',
-                        'message' => '{
-                          "text": "Merci beaucoup"
+                        'message' =>
+                            '{
+                          "text": "' .
+                            $message .
+                            '"
                         }',
                     ],
                     'EAAmZCJ9U8z1YBAF63doj3ZACfZAcgoplwDbiDZCcetZAeofZBXwTDhox8ZCxBcmJPmPwZAPZBU3Oy3q4FZABCkZCnlFwo4UmEEZCfKfhMtdtndAP0YYfQ1Ad6kErmkyuTrlo5ftSA1i8GqpjgZCk0TaWWEmodlAaYoibdzkZAR9w56iKe8xJSGlT40nkqv8qghX3HzL9AZD'
