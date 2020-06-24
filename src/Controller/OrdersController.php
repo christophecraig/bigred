@@ -93,7 +93,12 @@ class OrdersController extends AbstractController
                 'persistent_data_handler' => 'session',
             ]);
             // Send confirmation to messenger
-            $message = 'Your order is now waiting for confirmation';
+            $message =
+                'Your order on the ' .
+                $order->getDeliveryDate() .
+                ' ' .
+                $order->getDeliveryTime() .
+                ' is now waiting for confirmation';
             try {
                 // Returns a `FacebookFacebookResponse` object
                 $response = $fb->post(
