@@ -1,22 +1,22 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block title %}
-  Admin
+Admin
 {% endblock %}
 
 {% block body %}
-  <div class="tabs is-toggle is-fullwidth is-large">
-    <ul>
-      <li id="all" class="{{ filter ? '' : 'is-active' }}">
-        <a href="{{ path('admin') }}">
-          <span class="icon">
-            <i class="fas fa-stream" aria-hidden="true"></i>
-          </span>
-          <span>All</span>
-        </a>
-      </li>
-      <li class="{{ filter is same as('pending') ? 'is-active' : '' }}">
-        <a href="{{
+<div class="tabs is-toggle is-fullwidth is-large">
+  <ul>
+    <li id="all" class="{{ filter ? '' : 'is-active' }}">
+      <a href="{{ path('admin') }}">
+        <span class="icon">
+          <i class="fas fa-stream" aria-hidden="true"></i>
+        </span>
+        <span>All</span>
+      </a>
+    </li>
+    <li class="{{ filter is same as('pending') ? 'is-active' : '' }}">
+      <a href="{{
           path(
             'admin',
             {
@@ -24,14 +24,14 @@
             }
           )
           }}">
-          <span class="icon">
-            <i class="fas fa-hourglass-start" aria-hidden="true"></i>
-          </span>
-          <span>Pending</span>
-        </a>
-      </li>
-      <li class="{{ filter is same as('rescheduled') ? 'is-active' : '' }}">
-        <a href="{{
+        <span class="icon">
+          <i class="fas fa-hourglass-start" aria-hidden="true"></i>
+        </span>
+        <span>Pending</span>
+      </a>
+    </li>
+    <li class="{{ filter is same as('rescheduled') ? 'is-active' : '' }}">
+      <a href="{{
           path(
             'admin',
             {
@@ -39,14 +39,14 @@
             }
           )
           }}">
-          <span class="icon">
-            <i class="fas fa-clock" aria-hidden="true"></i>
-          </span>
-          <span>Rescheduled</span>
-        </a>
-      </li>
-      <li class="{{ filter is same as('confirmed') ? 'is-active' : '' }}">
-        <a href="{{
+        <span class="icon">
+          <i class="fas fa-clock" aria-hidden="true"></i>
+        </span>
+        <span>Rescheduled</span>
+      </a>
+    </li>
+    <li class="{{ filter is same as('confirmed') ? 'is-active' : '' }}">
+      <a href="{{
           path(
             'admin',
             {
@@ -54,14 +54,14 @@
             }
           )
           }}">
-          <span class="icon">
-            <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-          </span>
-          <span>Confirmed</span>
-        </a>
-      </li>
-      <li class="{{ filter is same as('cancelled') ? 'is-active' : '' }}">
-        <a href="{{
+        <span class="icon">
+          <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+        </span>
+        <span>Confirmed</span>
+      </a>
+    </li>
+    <li class="{{ filter is same as('cancelled') ? 'is-active' : '' }}">
+      <a href="{{
           path(
             'admin',
             {
@@ -69,35 +69,38 @@
             }
           )
           }}">
-          <span class="icon">
-            <i class="far fa-times-circle" aria-hidden="true"></i>
-          </span>
-          <span>Cancelled</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <ul id="orders">
-    {% for order in orders %}
-      <li class="box" id="order-{{ order.id }}">
-        <p>
-          {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} from
-          {{ "#{order.firstName} #{order.lastName}" }}
-          in {{ order.city }}
-        </p>
-        <p>
-          Status: {{ order.status }}
-        </p>
-        {% if order.status is same as('pending') %}
-        <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter })}}" class="button is-success">Confirm</a>
-        <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}" class="button is-warning">Reschedule</a>
-        <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled', filter: filter})}}" class="button is-danger">Cancel</a>
-        {% endif %}
-      </li>
-    {% else %}
+        <span class="icon">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </span>
+        <span>Cancelled</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<ul id="orders">
+  {% for order in orders %}
+  <li class="box" id="order-{{ order.id }}">
+    <p>
+      {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} from
+      {{ "#{order.firstName} #{order.lastName}" }}
+      in {{ order.city }}
+    </p>
+    <p>
+      Status: {{ order.status }}
+    </p>
+    {% if order.status is same as('pending') %}
+    <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter })}}"
+      class="button is-success">Confirm</a>
+    <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}"
+      class="button is-warning">Reschedule</a>
+    <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled', filter: filter})}}"
+      class="button is-danger">Cancel</a>
+    {% endif %}
+  </li>
+  {% else %}
 
-    {% endfor %}
-  
+  {% endfor %}
+
   {#
     Parameters:
       * nbPages (int): number of pages
@@ -107,61 +110,34 @@
 #}
 
 
-{% if nbPages > 1 %}
+  {% if nbPages > 1 %}
 
-    {# Number of page around current page+1 #}
-    {% set nearbyPagesLimit = 4 %}
+  {# Number of page around current page+1 #}
+  {% set nearbyPagesLimit = 4 %}
 
-    <div>
-        <ul class="pagination">
-            {% if currentPage != 1 %}
-            <li>
-                <a href="{{ path(url, { 'page': 1, 'filter': filter }) }}">First</a>
-            </li>
-            {% endif %}
-            {% for i in 1..nbPages %}
-                {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
-                    <li class="disabled"><a href="#">...</a></li>
-                {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
-                    <li class="disabled"><a href="#">...</a></li>
-                {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
-                {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
-                {% else %}
-                    <li {% if currentPage == loop.index  %} class="active"{% endif %}>
-                        <a href="{{ path(url, { 'page': loop.index, 'filter': filter }) }}">{{ loop.index }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-            {% if currentPage != nbPages %}
-            <li>
-                <a href="{{ path(url, { 'page': nbPages, 'filter': filter }) }}">Last</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-{% endif %}
+  <nav class="pagination is-medium is-centered" role="navigation" aria-label="pagination">
+    
+    <a {% if currentPage == 1 %} disabled {% endif %} class="pagination-link pagination-previous" href="{{ path(url, { 'page': 1, 'filter': filter }) }}">First</a>
 
-  
-  
-  {# </ul>
-  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-    <a class="pagination-previous">Previous</a>
-    <a class="pagination-next">Next page</a>
+    
+    <a {% if currentPage == nbPages %} disabled {% endif %}class="pagination-next" href="{{ path(url, { 'page': nbPages, 'filter': filter }) }}">Last</a>
     <ul class="pagination-list">
-      {% for i in %}
-      <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+      {% for i in 1..nbPages %}
+      {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
       <li><span class="pagination-ellipsis">&hellip;</span></li>
-      <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
+      {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+      {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+      {% else %}
       <li>
-        <a class="pagination-link is-current"
-          aria-label="Page 46"
-          aria-current="page">
-          46
-        </a>
+        <a class="pagination-link {% if currentPage == loop.index  %} is-current{% endif %}" href="{{ path(url, { 'page': loop.index, 'filter': filter }) }}">{{ loop.index }}</a>
       </li>
-      <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
-      <li><span class="pagination-ellipsis">&hellip;</span></li>
-      <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+      {% endif %}
+      {% endfor %}
     </ul>
-  </nav> #}
-{% endblock %}
+
+  </nav>
+  {% endif %}
+
+  {% endblock %}
