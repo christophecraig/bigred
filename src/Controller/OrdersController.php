@@ -118,7 +118,7 @@ class OrdersController extends AbstractController
                             '"
                         }',
                     ],
-                    (string) $_ENV['FB_PAGE_ACCESS_TOKEN']
+                    (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
                 );
             } catch (FacebookResponseException $e) {
                 echo 'Graph returned an error: ' . $e->getMessage();
