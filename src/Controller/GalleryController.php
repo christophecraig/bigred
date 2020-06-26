@@ -36,11 +36,11 @@ class GalleryController extends AbstractController
             echo 'Facebook SDK returned an error: ' . $e->getMessage();
             exit();
         }
-        $graphNode = $response->getGraphEdge();
+        $photos = $response->getGraphEdge()->asArray();
 
         return $this->render('gallery/index.html.twig', [
             'controller_name' => 'GalleryController',
-            'photos' => $graphNode,
+            'photos' => $photos,
         ]);
     }
 }
