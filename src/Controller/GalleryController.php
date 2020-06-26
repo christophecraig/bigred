@@ -26,7 +26,7 @@ class GalleryController extends AbstractController
         ]);
         try {
             $response = $fb->get(
-                '/283620859105921/photos?type=uploaded',
+                '/283620859105921/photos?fields=images&type=uploaded',
                 $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
             );
         } catch (FacebookResponseException $e) {
