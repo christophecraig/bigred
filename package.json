@@ -1,0 +1,28 @@
+{
+  "name": "bigred",
+  "version": "1.0.0",
+  "description": "to run after cloning:",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "node-sass --omit-source-map-url sass/style.scss public/css/style.css",
+    "dev": "npm run build -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christophecraig/bigred.git"
+  },
+  "author": "Christophe Craig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/christophecraig/bigred/issues"
+  },
+  "homepage": "https://github.com/christophecraig/bigred#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "bulma": "^0.9.0",
+    "node-sass": "^4.14.1"
+  }
+}

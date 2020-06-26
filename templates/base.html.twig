@@ -9,15 +9,18 @@
       {% endblock %}
     </title>
     {# <link rel="icon" type="image/png" href="/myicon.png" /> #}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css"
-      rel="stylesheet"
-      type="text/css" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
     {% block stylesheets %}
 
     {% endblock %}
   </head>
   <body>
-    {% include 'partials/navbar.html.twig' %}
+    <header>
+      <h1 class="title is-1 has-text-centered pt-5">
+        BigRed Firewood
+      </h1>
+      {% include 'partials/navbar.html.twig' %}
+    </header>
     <div class="container is-widescreen">
       {% for message in app.flashes('success') %}
         <div class="notification is-success">
