@@ -12,6 +12,7 @@ class OrdersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // TODO: Change to radio button for deliveryTime
         $builder->add('deliveryDate')->add('deliveryTime', TextType::class);
     }
 
