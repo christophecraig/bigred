@@ -12,27 +12,21 @@
   </style>
 
   <div class="example-wrapper">
-    <h1>
-      Hello {{ controller_name }}! ✅
-    </h1>
+    <h2 class="title is-2">
+      Gallery
+    </h2>
 
-    {{ dump(photos) }}
-
-    This friendly message is coming from:<ul>
-      <li>
-        Your controller at <code><a href="{{ '/Users/christophe/Projects/bigred/src/Controller/GalleryController.php'|file_link(
-              0
-            ) }}">
-            src/Controller/GalleryController.php
-          </a></code>
-      </li>
-      <li>
-        Your template at <code><a href="{{ '/Users/christophe/Projects/bigred/templates/gallery/index.html.twig'|file_link(
-              0
-            ) }}">
-            templates/gallery/index.html.twig
-          </a></code>
-      </li>
-    </ul>
+    <div class="columns is-multiline">
+      {% for photo in photos %}
+        <div class="column is-one-third-desktop is-half-tablet">
+          <img src="{{ photo.images[0].source }}" />
+        </div>
+      {% else %}
+        <p>
+          No photos were found on the facebook account linked. Did you allow the
+          app the right permissions to your page ?
+        </p>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}
