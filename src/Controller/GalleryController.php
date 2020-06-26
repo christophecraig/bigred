@@ -7,14 +7,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Exceptions\FacebookResponseException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GalleryController extends AbstractController
 {
     /**
      * @Route("/gallery", name="gallery")
      */
-    public function index()
+    public function index(SessionInterface $session)
     {
+        $session->start();
         $fb = new Facebook([
             'app_id' => $_ENV['FACEBOOK_APP_ID'],
             'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
