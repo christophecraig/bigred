@@ -75,6 +75,21 @@ Admin
         <span>Cancelled</span>
       </a>
     </li>
+    <li class="{{ filter is same as('delivered') ? 'is-active' : '' }}">
+      <a href="{{
+          path(
+            'admin',
+            {
+              filter: 'delivered'
+            }
+          )
+          }}">
+        <span class="icon">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </span>
+        <span>Delivered</span>
+      </a>
+    </li>
   </ul>
 </div>
 <ul id="orders">
@@ -88,17 +103,23 @@ Admin
     <p>
       Status: {{ order.status }}
     </p>
-    {% if order.status is same as('pending') %}
+    {% if order.status == 'pending' %}
     <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter })}}"
       class="button is-success">Confirm</a>
     <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}"
       class="button is-warning">Reschedule</a>
     <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled', filter: filter})}}"
       class="button is-danger">Cancel</a>
+      {% elseif order.status == 'confirmed' %}
+      <a href="{{ path('orders_update_status', { id: order.id, status: 'delivered', filter: filter})}}"
+      class="button is-primary">Mark as delivered</a>
+      {% elseif order.status == 'rescheduled'%}
+      <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter})}}"
+      class="button is-success">Confirm</a>
     {% endif %}
   </li>
   {% else %}
-
+  <p>No orders were found with this filter.</p>
   {% endfor %}
 
   {#
