@@ -253,7 +253,7 @@ pre {
   font-family: monospace; }
 
 body {
-  color: #4a4a4a;
+  color: #f0f0f0;
   font-size: 1em;
   font-weight: 400;
   line-height: 1.5; }
@@ -306,7 +306,7 @@ fieldset {
 pre {
   -webkit-overflow-scrolling: touch;
   background-color: whitesmoke;
-  color: #4a4a4a;
+  color: #f0f0f0;
   font-size: 0.875em;
   overflow-x: auto;
   padding: 1.25rem 1.5rem;
@@ -844,7 +844,7 @@ table th {
       padding: 18rem 1.5rem; } }
 
 .footer {
-  background-color: #fafafa;
+  background-color: #a62e1e;
   padding: 3rem 1.5rem 6rem; }
 
 .input, .textarea, .select select {
@@ -1406,7 +1406,7 @@ table th {
 
 .file-cta {
   background-color: whitesmoke;
-  color: #4a4a4a; }
+  color: #f0f0f0; }
 
 .file-name {
   border-color: #dbdbdb;
@@ -1607,7 +1607,7 @@ table th {
   .control.has-icons-left .input:focus ~ .icon,
   .control.has-icons-left .select:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon,
   .control.has-icons-right .select:focus ~ .icon {
-    color: #4a4a4a; }
+    color: #f0f0f0; }
   .control.has-icons-left .input.is-small ~ .icon,
   .control.has-icons-left .select.is-small ~ .icon, .control.has-icons-right .input.is-small ~ .icon,
   .control.has-icons-right .select.is-small ~ .icon {
@@ -2549,7 +2549,7 @@ table th {
   .button.is-text {
     background-color: transparent;
     border-color: transparent;
-    color: #4a4a4a;
+    color: #f0f0f0;
     text-decoration: underline; }
     .button.is-text:hover, .button.is-text.is-hovered, .button.is-text:focus, .button.is-text.is-focused {
       background-color: whitesmoke;
@@ -3440,7 +3440,7 @@ table th {
     font-size: 0.75rem; }
 
 .subtitle {
-  color: #4a4a4a;
+  color: #f0f0f0;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25; }
@@ -3468,7 +3468,7 @@ table th {
   background-color: #661c12;
   border-radius: 6px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #4a4a4a;
+  color: #f0f0f0;
   display: block;
   padding: 1.25rem; }
 
@@ -3977,7 +3977,7 @@ body.has-navbar-fixed-bottom {
   overflow-y: hidden; }
 
 .navbar-burger {
-  color: #4a4a4a;
+  color: #f0f0f0;
   cursor: pointer;
   display: block;
   height: 3.25rem;
@@ -4015,7 +4015,7 @@ body.has-navbar-fixed-bottom {
 
 .navbar-item,
 .navbar-link {
-  color: #4a4a4a;
+  color: #f0f0f0;
   display: block;
   line-height: 1.5;
   padding: 0.5rem 0.75rem;
@@ -4033,7 +4033,7 @@ a.navbar-item,
   .navbar-link:focus-within,
   .navbar-link:hover,
   .navbar-link.is-active {
-    background-color: #fafafa;
+    background-color: #a62e1e;
     color: #3273dc; }
 
 .navbar-item {
@@ -4262,7 +4262,7 @@ a.navbar-item,
   .navbar-link.is-active:not(:focus):not(:hover) {
     background-color: transparent; }
   .navbar-item.has-dropdown:focus .navbar-link, .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
-    background-color: #fafafa; } }
+    background-color: #a62e1e; } }
 
 .hero.is-fullheight-with-navbar {
   min-height: calc(100vh - 3.25rem); }
@@ -4350,7 +4350,7 @@ a.navbar-item,
 .card {
   background-color: #661c12;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #4a4a4a;
+  color: #f0f0f0;
   max-width: 100%;
   position: relative; }
 

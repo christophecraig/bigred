@@ -5,10 +5,11 @@
 
 // Set your brand colors
 $purple: #8a4d76;
-$pink: #fa7c91;
-$brown: #757763;
-$beige-light: #d0d1cd;
-$beige-lighter: #eff0eb;
+// $pink: #fa7c91;
+// $brown: #757763;
+// $beige-light: #d0d1cd;
+// $beige-lighter: #eff0eb;
+$text: #f0f0f0;
 
 // Update Bulma's global variables
 $family-sans-serif: 'Roboto Slab', sans-serif;
@@ -17,6 +18,7 @@ $family-sans-serif: 'Roboto Slab', sans-serif;
 $primary: $purple;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+$scheme-main-bis: #a62e1e;
 
 $scheme-main: #661c12;
 $navbar-background-color: #a62e1e;
