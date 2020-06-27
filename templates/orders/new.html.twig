@@ -1,15 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  New Orders
+  New Enquiry
 {% endblock %}
 
 {% block body %}
   <h1 class="title">
-    Create new Orders
+    Enquire
   </h1>
+
+  <p>
+    You will receive a message confirming we received the enquiry on Facebook
+    Messenger or by E-mail. You will later receive an update that will either
+    confirm or give you another date if it is not possible for us.
+  </p>
 
   {{ include('orders/_form.html.twig') }}
 
-  <a href="{{ path('orders_index') }}">back to list</a>
+  <a href="{{ path('home') }}">Cancel</a>
 {% endblock %}

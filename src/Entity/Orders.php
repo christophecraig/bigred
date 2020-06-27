@@ -13,6 +13,8 @@ use \DateTimeInterface;
  */
 class Orders
 {
+    const PAYMENT_CASH = 0;
+    const PAYMENT_DIRECT_CREDIT = 1;
     /**
      * @var int
      *
