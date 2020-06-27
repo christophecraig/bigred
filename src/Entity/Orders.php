@@ -73,6 +73,16 @@ class Orders
      */
     private $client;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $paymentType;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
     public function __construct()
     {
         $this->orderDate = new \DateTime();
@@ -164,6 +174,30 @@ class Orders
     public function setClient(?Clients $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?int
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(int $paymentType): self
+    {
+        $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }
