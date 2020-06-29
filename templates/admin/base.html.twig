@@ -18,10 +18,17 @@
   </head>
   <body>
     {% include 'admin/partials/navbar.html.twig' %}
-    {% for message in app.flashes('success') %}
-      <div class="flash-notice">
-        {{ message }}
-      </div>
+    {% for label, messages in app.flashes %}
+      {% for message in messages %}
+        <div class="flash-notice">
+          <h3 class="title is-3">
+            {{ label }}
+          </h3>
+          <p>
+            {{ message }}
+          </p>
+        </div>
+      {% endfor %}
     {% endfor %}
     <div class="container is-fluid">
       {% block body %}
