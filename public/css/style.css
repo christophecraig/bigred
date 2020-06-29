@@ -54,7 +54,7 @@
   vertical-align: top;
   width: 20px; }
   .modal-close::before, .modal-close::after {
-    background-color: #fafafa;
+    background-color: #e68e3f;
     content: "";
     display: block;
     left: 50%;
@@ -236,7 +236,7 @@ th {
     text-align: inherit; }
 
 html {
-  background-color: #fafafa;
+  background-color: #e68e3f;
   font-size: 16px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -269,7 +269,7 @@ pre {
   font-family: monospace; }
 
 body {
-  color: #f0f0f0;
+  color: #303030;
   font-size: 1em;
   font-weight: 400;
   line-height: 1.5; }
@@ -322,7 +322,7 @@ fieldset {
 pre {
   -webkit-overflow-scrolling: touch;
   background-color: whitesmoke;
-  color: #f0f0f0;
+  color: #303030;
   font-size: 0.875em;
   overflow-x: auto;
   padding: 1.25rem 1.5rem;
@@ -864,7 +864,7 @@ table th {
   padding: 3rem 1.5rem 6rem; }
 
 .input, .textarea, .select select {
-  background-color: #fafafa;
+  background-color: #f0f0f0;
   border-color: transparent;
   border-radius: 4px;
   color: #363636; }
@@ -1422,7 +1422,7 @@ table th {
 
 .file-cta {
   background-color: whitesmoke;
-  color: #f0f0f0; }
+  color: #303030; }
 
 .file-name {
   border-color: #dbdbdb;
@@ -1623,7 +1623,7 @@ table th {
   .control.has-icons-left .input:focus ~ .icon,
   .control.has-icons-left .select:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon,
   .control.has-icons-right .select:focus ~ .icon {
-    color: #f0f0f0; }
+    color: #303030; }
   .control.has-icons-left .input.is-small ~ .icon,
   .control.has-icons-left .select.is-small ~ .icon, .control.has-icons-right .input.is-small ~ .icon,
   .control.has-icons-right .select.is-small ~ .icon {
@@ -2525,7 +2525,7 @@ table th {
       max-width: 960px; } }
 
 .button {
-  background-color: #fafafa;
+  background-color: #e68e3f;
   border-color: #dbdbdb;
   border-width: 2px;
   color: #363636;
@@ -2565,7 +2565,7 @@ table th {
   .button.is-text {
     background-color: transparent;
     border-color: transparent;
-    color: #f0f0f0;
+    color: #303030;
     text-decoration: underline; }
     .button.is-text:hover, .button.is-text.is-hovered, .button.is-text:focus, .button.is-text.is-focused {
       background-color: whitesmoke;
@@ -3335,7 +3335,7 @@ table th {
     font-size: 1.5rem; }
   .button[disabled],
   fieldset[disabled] .button {
-    background-color: #fafafa;
+    background-color: #e68e3f;
     border-color: #dbdbdb;
     box-shadow: none;
     opacity: 0.5; }
@@ -3429,7 +3429,7 @@ table th {
     vertical-align: middle; }
 
 .title {
-  color: #e68e3f;
+  color: #eca;
   font-size: 2rem;
   font-weight: 600;
   line-height: 1.125; }
@@ -3456,7 +3456,7 @@ table th {
     font-size: 0.75rem; }
 
 .subtitle {
-  color: #f0f0f0;
+  color: #303030;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25; }
@@ -3484,7 +3484,7 @@ table th {
   background-color: white;
   border-radius: 6px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #f0f0f0;
+  color: #303030;
   display: block;
   padding: 1.25rem; }
 
@@ -4091,7 +4091,7 @@ body.has-navbar-fixed-bottom {
   overflow-y: hidden; }
 
 .navbar-burger {
-  color: #f0f0f0;
+  color: #303030;
   cursor: pointer;
   display: block;
   height: 3.25rem;
@@ -4129,7 +4129,7 @@ body.has-navbar-fixed-bottom {
 
 .navbar-item,
 .navbar-link {
-  color: #f0f0f0;
+  color: #303030;
   display: block;
   line-height: 1.5;
   padding: 0.5rem 0.75rem;
@@ -4301,7 +4301,7 @@ a.navbar-item,
     justify-content: flex-end;
     margin-left: auto; }
   .navbar-dropdown {
-    background-color: #fafafa;
+    background-color: #e68e3f;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     border-top: 2px solid #dbdbdb;
@@ -4455,16 +4455,16 @@ a.navbar-item,
 
 .modal-card-body {
   -webkit-overflow-scrolling: touch;
-  background-color: #fafafa;
+  background-color: #e68e3f;
   flex-grow: 1;
   flex-shrink: 1;
   overflow: auto;
   padding: 20px; }
 
 .card {
-  background-color: #fafafa;
+  background-color: #e68e3f;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #f0f0f0;
+  color: #303030;
   max-width: 100%;
   position: relative; }
 

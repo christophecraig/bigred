@@ -9,7 +9,7 @@ $purple: #8a4d76;
 // $brown: #757763;
 // $beige-light: #d0d1cd;
 // $beige-lighter: #eff0eb;
-$text: #f0f0f0;
+$text: #303030;
 
 // Update Bulma's global variables
 $family-sans-serif: 'Roboto Slab', sans-serif;
@@ -21,14 +21,15 @@ $fullhd-enabled: false;
 $scheme-main-bis: tomato;
 
 // $scheme-main: #661c12;
-$scheme-main: #fafafa;
+$scheme-main: #e68e3f;
 $navbar-background-color: #a62e1e;
-$title-color: #e68e3f;
+$title-color: #eca;
 // Update some of Bulma's component variables
 $box-background-color: lighten($scheme-main, 60%);
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
+$input-background-color: #f0f0f0;
 
 // Import only what you need from Bulma
 @import '../node_modules/bulma/sass/utilities/_all.sass';
