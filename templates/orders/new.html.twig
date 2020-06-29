@@ -5,17 +5,24 @@
 {% endblock %}
 
 {% block body %}
-  <h1 class="title">
-    Enquire
-  </h1>
+  <div class="box">
+    <h1 class="title">
+      Enquire
+    </h1>
 
-  <p>
-    You will receive a message confirming we received the enquiry on Facebook
-    Messenger or by E-mail. You will later receive an update that will either
-    confirm or give you another date if it is not possible for us.
-  </p>
+    <p>
+      You will receive a message confirming we received the enquiry on Facebook
+      Messenger or by E-mail. You will later receive an update that will either
+      confirm or give you another date if it is not possible for us.
+    </p>
 
-  {{ include('orders/_form.html.twig') }}
+    <p>
+      You are asking for an order on the {{ order.deliveryDate|date('d/m/y') }} in
+      the {{ order.deliveryTime }}.
+    </p>
 
-  <a href="{{ path('home') }}">Cancel</a>
+    {{ include('orders/_form.html.twig') }}
+
+    <a href="{{ path('home') }}">Cancel</a>
+  </div>
 {% endblock %}

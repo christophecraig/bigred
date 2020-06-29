@@ -1,4 +1,20 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
+{% if form.deliveryDate is defined %}
+{{ form_widget(form.deliveryDate)}}
+{% endif %}
+{% if form.deliveryTime is defined %}
+{{ form_widget(form.deliveryTime) }}
+{% endif %}
+<div class="field">
+    <label class="label">{{ form_label(form.paymentType) }}</label>
+    <div class="control">
+        <div class="select">{{ form_widget(form.paymentType) }}</div>
+    </div>
+</div>
+<div class="field">
+    <label class="label">{{ form_label(form.comment)}}</label>
+    <div class="control">{{ form_widget(form.comment) }}</div>
+</div>
 <button class="button">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+</h3>

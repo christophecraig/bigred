@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Orders{% endblock %}
+{% block title %}
+  Edit Orders
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Orders</h1>
+  <div class="box">
+    <h1 class="title is-2">
+      Reschedule
+    </h1>
 
-    {{ include('orders/_form.html.twig', {'button_label': 'Update'}) }}
+    {{
+      include(
+        'orders/_edit_form.html.twig',
+        {
+          button_label: 'Update'
+        }
+      )
+    }}
 
-    <a href="{{ path('orders_index') }}">back to list</a>
-
-    {{ include('orders/_delete_form.html.twig') }}
+    <a class="button" href="{{ path('admin') }}">Cancel</a>
+  </div>
 {% endblock %}
