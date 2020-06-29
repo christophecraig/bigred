@@ -64,60 +64,65 @@ class AdminController extends AbstractController
         if (null !== $request->get('filter')) {
             $params = ['filter' => $request->get('filter')];
         }
-        if ('rescheduled' === $request->get('status')) {
-            $form = $this->createForm(OrdersType::class, $order);
-            $form->handleRequest($request);
+        $form = $this->createForm(OrdersType::class, $order);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()
-                    ->getManager()
-                    ->flush();
-
-                try {
-                    $message =
-                        'Hi, we will not be able to deliver on the date you chose. We can reschedule on the ' .
-                        $order->getDeliveryDate()->format('d/m/y') .
-                        ' in the ' .
-                        $order->getDeliveryTime() .
-                        '. Would that be ok for you ?';
-                    $fb->post(
-                        '/me/messages',
-                        [
-                            'messaging_type' => 'UPDATE',
-                            'recipient' =>
-                                '{
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()
+                ->getManager()
+                ->flush();
+            if ('rescheduled' === $order->getStatus()) {
+                $message =
+                    'Hi, we will not be able to deliver on the date you chose. We can reschedule on the ' .
+                    $order->getDeliveryDate()->format('d/m/y') .
+                    ' in the ' .
+                    $order->getDeliveryTime() .
+                    '. Would that be ok for you ?';
+            } elseif ('confirmed' === $order->getStatus()) {
+                $message =
+                    'Hi, your order has been confirmed on the ' .
+                    $order->getDeliveryDate()->format('d/m/y') .
+                    ' in the ' .
+                    $order->getDeliveryTime() .
+                    '. Add it to your calendar!';
+            } else {
+                return $this->redirectToRoute('admin', $params);
+            }
+            try {
+                $fb->post(
+                    '/me/messages',
+                    [
+                        'messaging_type' => 'UPDATE',
+                        'recipient' =>
+                            '{
                               "id": "' .
-                                $client->getFbPSID() .
-                                '"
+                            $client->getFbPSID() .
+                            '"
                             }',
-                            'message' =>
-                                '{
+                        'message' =>
+                            '{
                               "text": "' .
-                                $message .
-                                '"
+                            $message .
+                            '"
                             }',
-                        ],
-                        (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
-                    );
-                } catch (FacebookSDKException $e) {
-                    $this->addFlash('error', 'FacebookSDKException');
-                } catch (FacebookResponseException $e) {
-                    $this->addFlash('error', 'FacebookResponseException');
-                }
-
+                    ],
+                    (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
+                );
+            } catch (FacebookSDKException $e) {
+                $this->addFlash('error', 'FacebookSDKException');
+                return $this->redirectToRoute('admin', $params);
+            } catch (FacebookResponseException $e) {
+                $this->addFlash('error', 'FacebookResponseException');
                 return $this->redirectToRoute('admin', $params);
             }
 
-            return $this->render('orders/edit.html.twig', [
-                'order' => $order,
-                'form' => $form->createView(),
-            ]);
+            return $this->redirectToRoute('admin', $params);
         }
-        $order->setStatus($request->get('status'));
 
-        $this->getDoctrine()
-            ->getManager()
-            ->flush();
+        return $this->render('orders/edit.html.twig', [
+            'order' => $order,
+            'form' => $form->createView(),
+        ]);
 
         // This will work only for admin
         return $this->redirectToRoute('admin', $params);
