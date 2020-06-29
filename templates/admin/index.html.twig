@@ -5,6 +5,7 @@ Admin
 {% endblock %}
 
 {% block body %}
+ {# Filter #}
 <div class="tabs is-toggle is-fullwidth is-large">
   <ul>
     <li id="all" class="{{ filter ? '' : 'is-active' }}">
@@ -92,6 +93,35 @@ Admin
     </li>
   </ul>
 </div>
+
+{# Sort #}
+
+<div class="container has-text-centered mb-5">
+  <span class="icon is-large">
+  <i class="fas fa-sort" aria-hidden="true"></i>
+  </span>
+  <div class="dropdown is-hoverable">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+      <span>Sort orders</span>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+    <div class="dropdown-content">
+      <a href="{{ path('admin', {'filter': filter, 'sort': 'o.deliveryDate'})}}" class="dropdown-item">
+        Newest to oldest
+      </a>
+      <a href="{{ path('admin', {'filter': filter, 'sort': 'client.id'})}}" class="dropdown-item">
+        Client
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
 <ul id="orders">
   {% for order in orders %}
   <li class="box" id="order-{{ order.id }}">
@@ -152,7 +182,7 @@ Admin
       {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
       {% else %}
       <li>
-        <a class="pagination-link {% if currentPage == loop.index  %} is-current{% endif %}" href="{{ path(url, { 'page': loop.index, 'filter': filter }) }}">{{ loop.index }}</a>
+        <a class="pagination-link {% if currentPage == loop.index  %} is-current{% endif %}" href="{{ path(url, { 'page': loop.index, 'filter': filter, 'sort': sort }) }}">{{ loop.index }}</a>
       </li>
       {% endif %}
       {% endfor %}

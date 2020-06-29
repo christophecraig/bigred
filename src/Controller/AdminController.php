@@ -23,24 +23,40 @@ class AdminController extends AbstractController
     {
         $page = 1;
         $limit = 10;
+        $sort = [];
+        $groupBy = '';
         if (null !== $request->get('page')) {
             $page = $request->get('page');
         }
+        if (null !== $request->get('sort')) {
+            $sort['criteria'] = $request->get('sort');
+        }
+        // if (null !== $request->get('groupBy')) {
+        //     $groupBy = $request->get('groupBy');
+        // }
 
         if (null !== $request->get('filter')) {
             $orders = $ordersRepository->findByStatus(
                 $request->get('filter'),
                 $page,
-                $limit
+                $limit,
+                $sort,
+                $groupBy
             );
         } else {
-            $orders = $ordersRepository->findAllPaginated($page, $limit);
+            $orders = $ordersRepository->findAllPaginated(
+                $page,
+                $limit,
+                $sort,
+                $groupBy
+            );
         }
         $nbPages = ceil($orders->count() / $limit);
 
         return $this->render('admin/index.html.twig', [
             'orders' => $orders,
             'filter' => $request->get('filter'),
+            'sort' => $sort,
             'currentPage' => $page,
             'nbPages' => $nbPages,
             'url' => 'admin',

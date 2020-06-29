@@ -22,8 +22,12 @@ class OrdersRepository extends ServiceEntityRepository
         parent::__construct($registry, Orders::class);
     }
 
-    public function findAllPaginated(int $page, int $limit)
-    {
+    public function findAllPaginated(
+        int $page = 0,
+        int $limit = 0,
+        array $sort = [],
+        string $groupBy = ''
+    ) {
         $fields = [
             'o.id',
             'o.confirmationDate',
@@ -38,8 +42,14 @@ class OrdersRepository extends ServiceEntityRepository
         ];
         $query = $this->createQueryBuilder('o')
             ->select($fields)
-            ->innerJoin('o.client', 'client')
-            ->getQuery();
+            ->innerJoin('o.client', 'client');
+        if (!empty($sort)) {
+            $query->addOrderBy($sort['criteria'], 'desc');
+        }
+        if (!empty($groupBy)) {
+            $query->addGroupBy($groupBy);
+        }
+        $query->getQuery();
 
         $paginator = $this->paginate($query, $page, $limit);
         // WHY THIS ???
@@ -102,8 +112,13 @@ class OrdersRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByStatus(string $status, int $page, int $limit)
-    {
+    public function findByStatus(
+        string $status,
+        int $page,
+        int $limit,
+        array $sort,
+        string $groupBy
+    ) {
         $fields = [
             'o.id',
             'o.confirmationDate',
@@ -120,8 +135,11 @@ class OrdersRepository extends ServiceEntityRepository
             ->select($fields)
             ->innerJoin('o.client', 'client')
             ->andWhere('o.status = :status')
-            ->setParameter('status', $status)
-            ->getQuery();
+            ->setParameter('status', $status);
+        if (!empty($sort)) {
+            $query->addOrderBy($sort['criteria'], 'desc');
+        }
+        $query->getQuery();
 
         $paginator = $this->paginate($query, $page, $limit);
         $paginator->setUseOutputWalkers(false);

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-  <div class="box">
+  <div class="box mt-5 mb-5">
     <h1 class="title">
       Enquire
     </h1>
@@ -16,10 +16,15 @@
       confirm or give you another date if it is not possible for us.
     </p>
 
-    <p>
-      You are asking for an order on the {{ order.deliveryDate|date('d/m/y') }} in
-      the {{ order.deliveryTime }}.
-    </p>
+    <div class="hero">
+      <div class="hero-body">
+        <p class="has-text-centered order-summary is-size-3">
+          You are asking for an order on the<br /> <strong>
+            {{ order.deliveryDate|date('d/m/y') }}
+          </strong> in the <strong>{{ order.deliveryTime }}</strong>.
+        </p>
+      </div>
+    </div>
 
     {{ include('orders/_form.html.twig') }}
 
