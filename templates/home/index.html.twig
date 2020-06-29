@@ -10,10 +10,13 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="title has-text-danger">Big Red Firewood</h1>
 <section class="section">
 <div class="container">
+<div class="box has-text-centered">
     <h3 class="title">$250/3 cubic meters approx</h3>
+    <figure class="image">
+        <img src="/assets/cover.jpg"/>
+    </figure>
     <p>Pine and Mac mix can supply in Rings or Split or just Mac or Pine loads.</p>
     <p>May be rain wet</p>
     <p><strong>Pahiatua, Eketahuna and Woodville only</strong></p>
@@ -26,28 +29,27 @@
     Text: 0211861472
     We will contact you in the evening to organize delivery.
     Thank you from BigRed Firewood.</p>
+    </div>
 
 
     {% if app.user %}
-    <div class="card">
-        <div class="card-content">
-            <div id="calendar"></div>
-            <div id="order-modal" class="modal">
-                <div class="modal-background" onclick="closeModal(event)"></div>
-                    <div id="modal-content" class="modal-content">
+    <div class="box">
+        <div id="calendar"></div>
+        <div id="order-modal" class="modal">
+            <div class="modal-background" onclick="closeModal(event)"></div>
+                <div id="modal-content" class="modal-content">
 
-                    </div>
-                <button class="modal-close is-large" aria-label="close" onclick="closeModal(event)"></button>
-            </div>
+                </div>
+            <button class="modal-close is-large" aria-label="close" onclick="closeModal(event)"></button>
         </div>
     </div>
-        {% else %}
-            <div class="hero">
-                <div class="hero-body">
-                You have to <a href="{{ path('app_login') }}">log in</a> before you can place an order.
-                </div>
+    {% else %}
+        <div class="hero">
+            <div class="hero-body">
+            You have to <a href="{{ path('app_login') }}">log in</a> before you can place an order.
             </div>
-        {% endif %}
+        </div>
+    {% endif %}
 </div>
 </section>
 {% endblock %}
