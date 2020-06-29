@@ -58,7 +58,6 @@ class AdminController extends AbstractController
             'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
             'persistent_data_handler' => 'session',
         ]);
-        $order->setStatus($request->get('status'));
         $client = $order->getClient();
         $params = [];
         if (null !== $request->get('filter')) {
@@ -67,10 +66,15 @@ class AdminController extends AbstractController
         $form = $this->createForm(OrdersType::class, $order);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (
+            'confirmed' === $request->get('status') ||
+            ($form->isSubmitted() && $form->isValid())
+        ) {
+            $order->setStatus($request->get('status'));
             $this->getDoctrine()
                 ->getManager()
                 ->flush();
+
             if ('rescheduled' === $order->getStatus()) {
                 $message =
                     'Hi, we will not be able to deliver on the date you chose. We can reschedule on the ' .
