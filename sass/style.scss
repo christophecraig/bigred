@@ -18,12 +18,14 @@ $family-sans-serif: 'Roboto Slab', sans-serif;
 $primary: $purple;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
-$scheme-main-bis: #a62e1e;
+$scheme-main-bis: tomato;
 
-$scheme-main: #661c12;
+// $scheme-main: #661c12;
+$scheme-main: #fafafa;
 $navbar-background-color: #a62e1e;
 $title-color: #e68e3f;
 // Update some of Bulma's component variables
+$box-background-color: lighten($scheme-main, 60%);
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
@@ -38,6 +40,8 @@ $input-shadow: none;
 @import '../node_modules/bulma/sass/elements/button.sass';
 @import '../node_modules/bulma/sass/elements/title.sass';
 @import '../node_modules/bulma/sass/elements/box.sass';
+@import '../node_modules/bulma/sass/elements/icon.sass';
+@import '../node_modules/bulma/sass/elements/image.sass';
 @import '../node_modules/bulma/sass/components/navbar.sass';
 @import '../node_modules/bulma/sass/components/modal.sass';
 @import '../node_modules/bulma/sass/components/card.sass';
