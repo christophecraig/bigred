@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Orders;
 use App\Repository\OrdersRepository;
 use App\Form\OrdersType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,6 +72,7 @@ class AdminController extends AbstractController
             ($form->isSubmitted() && $form->isValid())
         ) {
             $order->setStatus($request->get('status'));
+            $order->setConfirmationDate(new DateTime());
             $this->getDoctrine()
                 ->getManager()
                 ->flush();
