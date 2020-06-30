@@ -58,6 +58,7 @@ class ClientsController extends AbstractController
      */
     public function show(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $client = $this->getUser();
         return $this->render('clients/show.html.twig', [
             'client' => $client,

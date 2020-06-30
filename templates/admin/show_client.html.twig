@@ -1,0 +1,116 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Admin
+{% endblock %}
+
+{% block body %}
+  <a href="{{ path('admin') }}">Back</a>
+  <div class="card">
+    <div class="card-content has-text-centered">
+      <h1 class="title">
+        {{ client.firstName ~ ' ' ~ client.lastName }}
+      </h1>
+      <div>
+        <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+        {{ client.isVerified ? '✅' : '' }}
+      </div>
+      <div>
+        {{ client.telephone }}
+      </div>
+      <div class="mt-5 mb-5">
+        <h3 class="title is-5">
+          Address
+        </h3>
+        <p>
+          {{ client.address }} {% if client.addressMore %}
+            ({{ client.addressMore }})
+          {% endif %}
+        </p>
+        <p>
+          {{ client.code }}
+        </p>
+        <p>
+          {{ client.city }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {# Orders #}
+<ul id="orders">
+  {% for order in orders %}
+  <li class="box" id="order-{{ order.id }}">
+  <div class="columns is-vcentered is-multiline">
+    <div class="column is-three-quarters"><h4 class="title is-4">
+      {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} - 
+      <a href="{{ path('admin_show_client', {'id': order.clientId})}}">{{ "#{client.firstName} #{client.lastName}" }}</a>, {{ client.city }}
+    </h2>
+    <p>
+      Status: {{ order.status }}
+    </p>
+    <div class="">
+      <div>{{ order.comment }}</div>
+    </div>
+    </div>
+    <div class="column is-one-quarter has-text-right">
+    {% if order.status == 'pending' %}
+    <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed' })}}"
+      class="button is-success"><span class="icon"><i class="fas fa-check"></i></a>
+    <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled'})}}"
+      class="button is-warning">Reschedule</a>
+    <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled'})}}"
+      class="button is-danger"><span class="icon"><i class="far fa-trash-alt"></i></span></a>
+      {% elseif order.status == 'confirmed' %}
+      <a href="{{ path('orders_update_status', { id: order.id, status: 'delivered'})}}"
+      class="button is-primary">Mark as delivered</a>
+      {% elseif order.status == 'rescheduled'%}
+      <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed'})}}"
+      class="button is-success">Confirm</a>
+    {% endif %}
+    </div>
+    </div>
+  </li>
+  {% else %}
+  <p>No orders were found with this filter.</p>
+  {% endfor %}
+
+  {#
+    Parameters:
+      * nbPages (int): number of pages
+      * currentPage (int): current pages
+      * url (string): route name & query (string): route parameter
+        ex: list/page-5?q=myFilter (5 = page and query = myFilter)
+#}
+
+
+  {% if nbPages > 1 %}
+
+  {# Number of page around current page+1 #}
+  {% set nearbyPagesLimit = 4 %}
+
+  <nav class="pagination is-medium is-centered" role="navigation" aria-label="pagination">
+    
+    <a {% if currentPage == 1 %} disabled {% endif %} class="pagination-link pagination-previous" href="{{ path(url, { 'page': 1, 'filter': filter }) }}">First</a>
+
+    
+    <a {% if currentPage == nbPages %} disabled {% endif %}class="pagination-next" href="{{ path(url, { 'page': nbPages, 'filter': filter }) }}">Last</a>
+    <ul class="pagination-list">
+      {% for i in 1..nbPages %}
+      {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+      {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+      {% else %}
+      <li>
+        <a class="pagination-link {% if currentPage == loop.index  %} is-current{% endif %}" href="{{ path(url, { 'page': loop.index, 'filter': filter, 'sort': sort }) }}">{{ loop.index }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+  </nav>
+  {% endif %}
+{% endblock %}

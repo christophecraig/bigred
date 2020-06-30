@@ -42,6 +42,19 @@ class OrdersController extends AbstractController
     }
 
     /**
+     * @Route("/admin/clients/{id}/orders", name="orders_byclient_admin", methods={"GET"})
+     */
+    public function showByClient(
+        OrdersRepository $ordersRepository,
+        Clients $client
+    ) {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        return $this->render('orders/index.html.twig', [
+            'orders' => $ordersRepository->findByClient($client),
+        ]);
+    }
+
+    /**
      * @Route("/my-orders", name="orders_byclient", methods={"GET"})
      */
     public function showById(OrdersRepository $ordersRepository): Response

@@ -122,24 +122,30 @@ Admin
 </div>
 </div>
 
+{# Orders #}
 <ul id="orders">
   {% for order in orders %}
   <li class="box" id="order-{{ order.id }}">
-    <p>
-      {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} from
-      {{ "#{order.firstName} #{order.lastName}" }}
-      in {{ order.city }}
-    </p>
+  <div class="columns is-vcentered is-multiline">
+    <div class="column is-three-quarters"><h4 class="title is-4">
+      {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} - 
+      <a href="{{ path('admin_show_client', {'id': order.clientId})}}">{{ "#{order.firstName} #{order.lastName}" }}</a>, {{ order.city }}
+    </h2>
     <p>
       Status: {{ order.status }}
     </p>
+    <div class="">
+      <div>{{ order.comment }}</div>
+    </div>
+    </div>
+    <div class="column is-one-quarter has-text-right">
     {% if order.status == 'pending' %}
     <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter })}}"
-      class="button is-success">Confirm</a>
+      class="button is-success"><span class="icon"><i class="fas fa-check"></i></a>
     <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}"
       class="button is-warning">Reschedule</a>
     <a href="{{ path('orders_update_status', { id: order.id, status: 'cancelled', filter: filter})}}"
-      class="button is-danger">Cancel</a>
+      class="button is-danger"><span class="icon"><i class="far fa-trash-alt"></i></span></a>
       {% elseif order.status == 'confirmed' %}
       <a href="{{ path('orders_update_status', { id: order.id, status: 'delivered', filter: filter})}}"
       class="button is-primary">Mark as delivered</a>
@@ -147,6 +153,8 @@ Admin
       <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter})}}"
       class="button is-success">Confirm</a>
     {% endif %}
+    </div>
+    </div>
   </li>
   {% else %}
   <p>No orders were found with this filter.</p>

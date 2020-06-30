@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
+use App\Entity\Clients;
 use App\Repository\OrdersRepository;
 use App\Form\OrdersType;
+use App\Repository\ClientsRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,7 +133,10 @@ class AdminController extends AbstractController
                     (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
                 );
             } catch (FacebookSDKException $e) {
-                $this->addFlash('error', 'FacebookSDKException');
+                $this->addFlash(
+                    'Facebook Messenger Error',
+                    'The message has not been sent to the customer\'s Facebook Messenger account, you should contact him to let him know any updates on his order. An email has been sent instead.'
+                );
                 return $this->redirectToRoute('admin', $params);
             } catch (FacebookResponseException $e) {
                 $this->addFlash('error', 'FacebookResponseException');
@@ -148,5 +153,25 @@ class AdminController extends AbstractController
 
         // This will work only for admin
         return $this->redirectToRoute('admin', $params);
+    }
+
+    /**
+     * @Route("/admin/clients/{id}", name="admin_show_client", methods={"GET"})
+     */
+    public function showClient(
+        Clients $client,
+        OrdersRepository $ordersRepository
+    ) {
+        $orders = $ordersRepository->findByClient($client);
+        // Show newest to oldest
+        usort($orders, function ($a, $b) {
+            return $b['deliveryDate'] <=> $a['deliveryDate'];
+        });
+        return $this->render('admin/show_client.html.twig', [
+            'client' => $client,
+            'orders' => $orders,
+            'page' => 1,
+            'nbPages' => 1,
+        ]);
     }
 }
