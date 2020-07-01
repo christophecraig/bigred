@@ -13,7 +13,7 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a href="/" class="navbar-item">
+      <a href="{{ path('admin')}}" class="navbar-item">
         Home
       </a>
       </div>
@@ -23,14 +23,11 @@
       <div class="navbar-item">
         <div class="buttons">
           {% if app.user %}
-            <a href="{{ path('show_account') }}" class="button is-primary">
-              <strong>Account</strong>
-            </a>
             <a href="{{ path('admin_logout') }}" class="button is-light">
               Sign out
             </a>
           {% else %}
-            Admin - 
+
             <a href="{{ path('admin_login')}}" class="button is-light">
               Sign in
             </a>
