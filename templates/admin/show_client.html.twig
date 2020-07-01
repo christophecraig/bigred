@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-  <a href="{{ path('admin') }}">Back</a>
-  <div class="card">
+  <a class="button is-primary" href="{{ path('admin') }}"><span class="icon"><i class="fas fa-arrow-left"></i></span><span>Back</span></a>
+  <section class="section">
+  <div class="columns">
+  <div class="column is-half is-offset-one-quarter"><div class="card">
     <div class="card-content has-text-centered">
       <h1 class="title">
         {{ client.firstName ~ ' ' ~ client.lastName }}
@@ -36,8 +38,12 @@
       </div>
     </div>
   </div>
+  </div>
+  </section>
 
   {# Orders #}
+  <section class="section">
+  <h2 class="subtitle is-2 has-text-centered">Orders</h2>
 <ul id="orders">
   {% for order in orders %}
   <li class="box" id="order-{{ order.id }}">
@@ -72,8 +78,9 @@
     </div>
   </li>
   {% else %}
-  <p>No orders were found with this filter.</p>
+  <p>No orders were found for this client.</p>
   {% endfor %}
+  </section>
 
   {#
     Parameters:
