@@ -87,6 +87,7 @@ class AdminController extends AbstractController
 
         if (
             'confirmed' === $request->get('status') ||
+            'delivered' === $request->get('status') ||
             ($form->isSubmitted() && $form->isValid())
         ) {
             $order->setStatus($request->get('status'));
