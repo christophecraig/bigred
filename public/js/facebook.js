@@ -22,7 +22,7 @@ window.fbAsyncInit = function () {
         } else if (e.event == 'checkbox') {
             var checkboxState = e.state;
             if (checkboxState) {
-                window.confirmOptin();
+                window.confirmOptIn();
             }
             console.log("Checkbox state: " + checkboxState);
         } else if (e.event == 'not_you') {
@@ -33,3 +33,11 @@ window.fbAsyncInit = function () {
 
     });
 };
+
+function confirmOptIn() {
+    FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+        'app_id':
+            '2743452592557910', 'page_id': '283620859105921', 'ref': '{{ app.user.id }}',
+        'user_ref': '{{ user_ref }}'
+    });
+}
