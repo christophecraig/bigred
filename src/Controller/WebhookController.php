@@ -33,6 +33,7 @@ class WebhookController extends AbstractController
                 return new Response('essaye encore', 403);
             }
         } else {
+            file_put_contents('logs.log', 'test', FILE_APPEND);
             $requestBody = json_decode(file_get_contents('php://input'));
             file_put_contents(
                 'logs.log',
