@@ -48,7 +48,8 @@ class WebhookController extends AbstractController
                 'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
                 'persistent_data_handler' => 'session',
             ]);
-            $psid = $requestBody->entry[0]->messaging[0]->sender->id;
+            // $psid = $requestBody->entry[0]->messaging[0]->sender->id;
+            $user_ref = $requestBody->entry[0]->messaging[0]->optin->user_ref;
             if (isset($requestBody->entry[0]->messaging[0]->optin)) {
                 $em = $this->getDoctrine()->getManager();
                 file_put_contents(
@@ -60,7 +61,7 @@ class WebhookController extends AbstractController
                 $client = $em
                     ->getRepository(Clients::class)
                     ->find($requestBody->entry[0]->messaging[0]->optin->ref);
-                $client->setFbPSID($psid);
+                $client->setFbPSID($user_ref);
                 $em->flush();
 
                 $message =
@@ -78,8 +79,8 @@ class WebhookController extends AbstractController
                         'messaging_type' => 'UPDATE',
                         'recipient' =>
                             '{
-                          "id": "' .
-                            $psid .
+                          "user_ref": "' .
+                            $user_ref .
                             '"
                         }',
                         'message' =>
@@ -100,18 +101,6 @@ class WebhookController extends AbstractController
                 exit();
             }
             $graphNode = $response->getGraphNode();
-            // }
-
-            // This in a post to /me/messages worked in the fb explorer
-            // {
-            //     "messaging_type": "UPDATE",
-            //     "recipient": {
-            //       "id": "2754187091352898"
-            //     },
-            //     "message": {
-            //       "text": "superrrr"
-            //     }
-            //   }
             return new Response('', 200);
         }
     }
