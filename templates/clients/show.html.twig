@@ -5,11 +5,6 @@
 {% endblock %}
 
 {% block body %}
-  <script src="/js/facebook.js"></script>
-  <script async
-    defer
-    src="https://connect.facebook.net/en_US/sdk/debug.js"></script>
-
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
       <div class="card">
@@ -42,15 +37,7 @@
               {{ client.city }}
             </p>
           </div>
-          {# TODO: only show this button if client.fbPSID is null #}
-          <div class="fb-send-to-messenger"
-            cta_text="SEND_ME_UPDATES"
-            messenger_app_id="2743452592557910"
-            page_id="283620859105921"
-            color="blue"
-            size="large"
-            ref="{{ client.id }}"></div>
-          <div>
+
             <a class="button is-fullwidth is-primary mb-3"
               href="{{ path('clients_edit') }}">
               Edit

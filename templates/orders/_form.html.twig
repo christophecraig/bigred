@@ -19,5 +19,14 @@
     {{ form_widget(form.comment) }}
   </div>
 </div>
+<div class="fb-messenger-checkbox"
+  origin="https://dev.christophecraig.com"
+  page_id="283620859105921"
+  messenger_app_id="2743452592557910"
+  user_ref="{{ app.user.id }}"
+  allow_login="true"
+  size="large"
+  skin="light"
+  center_align="false"></div>
 <button class="button">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
