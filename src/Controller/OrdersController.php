@@ -71,6 +71,7 @@ class OrdersController extends AbstractController
     public function new(Request $request, MailerInterface $mailer): Response
     {
         $order = new Orders();
+        $user_ref = bin2hex(random_bytes(32));
         if ($request->get('date') && $request->get('time')) {
             $order->setDeliveryDate(new \DateTime($request->get('date')));
             $order->setDeliveryTime($request->get('time'));
@@ -145,6 +146,7 @@ class OrdersController extends AbstractController
 
         return $this->render('orders/new.html.twig', [
             'order' => $order,
+            'user_ref' => $user_ref,
             'form' => $form->createView(),
         ]);
     }
