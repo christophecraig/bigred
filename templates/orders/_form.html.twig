@@ -34,7 +34,5 @@
   '2743452592557910', 'page_id': '283620859105921', 'ref': '{{ app.user.id }}',
   'user_ref': '{{ user_ref }}' }); }
 </script>
-<button class="button" onclick="confirmOptin()">
-  {{ button_label|default('Save') }}
-</button>
+<button class="button">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
