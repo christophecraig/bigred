@@ -1,3 +1,9 @@
+<script>
+  window.confirmOptIn = function () {
+  FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, { 'app_id':
+  '2743452592557910', 'page_id': '283620859105921', 'ref': '{{ app.user.id }}',
+  'user_ref': '{{ user_ref }}' }); }
+</script>
 {{ form_start(form) }}
 {% if form.deliveryDate is defined %}
   {{ form_widget(form.deliveryDate) }}
@@ -28,11 +34,5 @@
   size="large"
   skin="light"
   center_align="false"></div>
-<script>
-  function confirmOptIn() {
-  FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, { 'app_id':
-  '2743452592557910', 'page_id': '283620859105921', 'ref': '{{ app.user.id }}',
-  'user_ref': '{{ user_ref }}' }); }
-</script>
 <button class="button">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
