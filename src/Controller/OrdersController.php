@@ -121,7 +121,7 @@ class OrdersController extends AbstractController
                         'messaging_type' => 'UPDATE',
                         'recipient' =>
                             '{
-                          "id": "' .
+                          "user_ref": "' .
                             $this->getUser()->getFbPSID() .
                             '"
                         }',
