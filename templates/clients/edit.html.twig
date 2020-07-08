@@ -5,28 +5,30 @@
 {% endblock %}
 
 {% block body %}
-  <div class="columns">
-    <div class="column is-half is-offset-one-quarter">
-      <div class="card">
-        <div class="card-content">
-          <h1 class="title">
-            Edit Account
-          </h1>
-          {{
-            include(
-              'clients/_form.html.twig',
-              {
-                button_label: 'Update'
-              }
-            )
-          }}
+  <section class="section">
+    <div class="columns">
+      <div class="column is-half is-offset-one-quarter">
+        <div class="card">
+          <div class="card-content">
+            <h1 class="title">
+              Edit Account
+            </h1>
+            {{
+              include(
+                'clients/_form.html.twig',
+                {
+                  button_label: 'Update'
+                }
+              )
+            }}
 
-          <a class="button is-fullwidth is-light mb-3"
-            href="{{ path('change_password') }}">
-            Change password
-          </a>
+            <a class="button is-fullwidth is-light mb-3"
+              href="{{ path('change_password') }}">
+              Change password
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 {% endblock %}
