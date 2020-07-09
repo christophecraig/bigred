@@ -91,7 +91,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if (
-            'confirmed' === $request->get('status') ||
             'delivered' === $request->get('status') ||
             ($form->isSubmitted() && $form->isValid())
         ) {

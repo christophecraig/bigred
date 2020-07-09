@@ -128,9 +128,9 @@ Admin
   <li class="box" id="order-{{ order.id }}">
   <div class="columns is-vcentered is-multiline">
     <div class="column is-three-quarters"><h4 class="title is-4">
-      {{ order.deliveryDate|date('d/m/y') }} {{ order.deliveryTime }} - 
+      {{ order.deliveryDate|date('d/m/y') }} {% if order.deliveryRealTime %}{{ order.deliveryRealTime }}{% else %}{{ order.deliveryTime }}{% endif %} - 
       <a href="{{ path('admin_show_client', {'id': order.clientId})}}">{{ "#{order.firstName} #{order.lastName}" }}</a>, {{ order.city }}
-    </h2>
+    </h4>
     <p>
       Status: {{ order.status }}
     </p>
@@ -150,6 +150,8 @@ Admin
       <a href="{{ path('orders_update_status', { id: order.id, status: 'delivered', filter: filter})}}"
       class="button is-primary">Mark as delivered</a>
       {% elseif order.status == 'rescheduled'%}
+      <a href="{{ path('orders_update_status', { id: order.id, status: 'rescheduled', filter: filter})}}"
+      class="button is-warning">Reschedule</a>
       <a href="{{ path('orders_update_status', { id: order.id, status: 'confirmed', filter: filter})}}"
       class="button is-success">Confirm</a>
     {% endif %}

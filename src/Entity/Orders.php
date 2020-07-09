@@ -86,7 +86,7 @@ class Orders
     private $comment;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="time", nullable=true)
      */
     private $deliveryRealTime;
 
@@ -214,8 +214,9 @@ class Orders
         return $this->deliveryRealTime;
     }
 
-    public function setDeliveryRealTime(?\DateTimeInterface $deliveryRealTime): self
-    {
+    public function setDeliveryRealTime(
+        ?\DateTimeInterface $deliveryRealTime
+    ): self {
         $this->deliveryRealTime = $deliveryRealTime;
 
         return $this;

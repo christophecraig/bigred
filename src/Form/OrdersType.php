@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -42,6 +43,10 @@ class OrdersType extends AbstractType
                         'Morning' => 'morning',
                         'Afternoon' => 'afternoon',
                     ],
+                ])
+                ->add('deliveryRealTime', TimeType::class, [
+                    'hours' => [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                    'minutes' => [0, 15, 30, 45],
                 ]);
         }
     }
