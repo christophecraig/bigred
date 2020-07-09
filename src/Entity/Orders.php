@@ -85,6 +85,11 @@ class Orders
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deliveryRealTime;
+
     public function __construct()
     {
         $this->orderDate = new \DateTime();
@@ -200,6 +205,18 @@ class Orders
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getDeliveryRealTime(): ?\DateTimeInterface
+    {
+        return $this->deliveryRealTime;
+    }
+
+    public function setDeliveryRealTime(?\DateTimeInterface $deliveryRealTime): self
+    {
+        $this->deliveryRealTime = $deliveryRealTime;
 
         return $this;
     }
