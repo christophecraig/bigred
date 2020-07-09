@@ -125,7 +125,7 @@ class AdminController extends AbstractController
                         'messaging_type' => 'UPDATE',
                         'recipient' =>
                             '{
-                              "id": "' .
+                              "user_ref": "' .
                             $client->getFbPSID() .
                             '"
                             }',
