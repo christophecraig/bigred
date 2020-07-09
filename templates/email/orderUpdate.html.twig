@@ -1,4 +1,6 @@
 {# will be switched to order.deliveryrealtime #}
-Your order is now {{ order.status }} on the {{ order.deliveryDate }}. <br />
+Your order is now {{ order.status }} on the {{
+  order.deliveryDate|date('d/m/y')
+}}. <br />
 Thank you, <br />
 Big Red
