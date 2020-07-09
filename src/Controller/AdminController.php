@@ -6,7 +6,6 @@ use App\Entity\Orders;
 use App\Entity\Clients;
 use App\Repository\OrdersRepository;
 use App\Form\OrdersType;
-use App\Repository\ClientsRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Exceptions\FacebookResponseException;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 
 class AdminController extends AbstractController
 {
@@ -68,8 +70,11 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/orders/{id}/update-status", name="orders_update_status", methods={"GET","POST"})
      */
-    public function updateStatus(Request $request, Orders $order): Response
-    {
+    public function updateStatus(
+        Request $request,
+        Orders $order,
+        MailerInterface $mailer
+    ): Response {
         $fb = new Facebook([
             'app_id' => $_ENV['FACEBOOK_APP_ID'],
             'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
@@ -134,10 +139,27 @@ class AdminController extends AbstractController
                     (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
                 );
             } catch (FacebookSDKException $e) {
+                // TODO : Send mail here
                 $this->addFlash(
                     'Facebook Messenger Error',
                     'The message has not been sent to the customer\'s Facebook Messenger account, you should contact him to let him know any updates on his order. An email has been sent instead.'
                 );
+                $email = (new TemplatedEmail())
+                    ->from(
+                        new Address(
+                            'contact@bigred.one19.nz',
+                            'BigRed Firewood'
+                        )
+                    )
+                    ->to($client->getEmail())
+                    ->subject('Your order is now waiting for confirmation!')
+                    ->htmlTemplate('email/orderUpdate.html.twig')
+                    ->context([
+                        'order' => $order,
+                        'message' => $message,
+                        'client' => $client,
+                    ]);
+                $mailer->send($email);
                 return $this->redirectToRoute('admin', $params);
             } catch (FacebookResponseException $e) {
                 $this->addFlash('error', 'FacebookResponseException');

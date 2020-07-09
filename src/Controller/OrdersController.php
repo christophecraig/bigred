@@ -90,7 +90,9 @@ class OrdersController extends AbstractController
             $entityManager->flush();
 
             $email = (new TemplatedEmail())
-                ->from(new Address('bigred@christophecraig.com', 'Big Red'))
+                ->from(
+                    new Address('contact@bigred.one19.nz', 'BigRed Firewood')
+                )
                 ->to($this->getUser()->getUsername())
                 ->subject('Your order is now waiting for confirmation!')
                 ->htmlTemplate('email/placedOrder.html.twig')
