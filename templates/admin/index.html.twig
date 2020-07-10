@@ -128,7 +128,7 @@ Admin
   <li class="box" id="order-{{ order.id }}">
   <div class="columns is-vcentered is-multiline">
     <div class="column is-three-quarters"><h4 class="title is-4">
-      {{ order.deliveryDate|date('d/m/y') }} {% if order.deliveryRealTime %}{{ order.deliveryRealTime }}{% else %}{{ order.deliveryTime }}{% endif %} - 
+      {{ order.deliveryDate|date('d/m/y') }} {% if order.deliveryRealTime %}{{ order.deliveryRealTime|date('h:i a') }}{% else %}{{ order.deliveryTime }}{% endif %} - 
       <a href="{{ path('admin_show_client', {'id': order.clientId})}}">{{ "#{order.firstName} #{order.lastName}" }}</a>, {{ order.city }}
     </h4>
     <p>
