@@ -31,6 +31,7 @@ class OrdersType extends AbstractType
                     ],
                 ])
                 ->add('comment', TextareaType::class, [
+                    'required' => false,
                     'attr' => ['class' => 'textarea'],
                 ]);
         } else {

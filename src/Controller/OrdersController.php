@@ -89,18 +89,6 @@ class OrdersController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            $email = (new TemplatedEmail())
-                ->from(
-                    new Address('contact@bigred.one19.nz', 'BigRed Firewood')
-                )
-                ->to($this->getUser()->getUsername())
-                ->subject('Your order is now waiting for confirmation!')
-                ->htmlTemplate('email/placedOrder.html.twig')
-                ->context([
-                    'order' => $order,
-                    'user' => $this->getUser(),
-                ]);
-            $mailer->send($email);
             $fb = new Facebook([
                 'app_id' => $_ENV['FACEBOOK_APP_ID'],
                 'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
@@ -137,11 +125,47 @@ class OrdersController extends AbstractController
                     (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
                 );
             } catch (FacebookResponseException $e) {
-                echo 'Graph returned an error: ' . $e->getMessage();
-                exit();
+                $this->addFlash(
+                    'Email sent',
+                    'You have been sent a confirmation email.'
+                );
+                $email = (new TemplatedEmail())
+                    ->from(
+                        new Address(
+                            'contact@bigred.one19.nz',
+                            'BigRed Firewood'
+                        )
+                    )
+                    ->to($this->getUser()->getUsername())
+                    ->subject('Your order is now waiting for confirmation!')
+                    ->htmlTemplate('email/placedOrder.html.twig')
+                    ->context([
+                        'order' => $order,
+                        'user' => $this->getUser(),
+                    ]);
+                $mailer->send($email);
+                return $this->redirectToRoute('home');
             } catch (FacebookSDKException $e) {
-                echo 'Facebook SDK returned an error: ' . $e->getMessage();
-                exit();
+                $this->addFlash(
+                    'Email sent',
+                    'You have been sent a confirmation email.'
+                );
+                $email = (new TemplatedEmail())
+                    ->from(
+                        new Address(
+                            'contact@bigred.one19.nz',
+                            'BigRed Firewood'
+                        )
+                    )
+                    ->to($this->getUser()->getUsername())
+                    ->subject('Your order is now waiting for confirmation!')
+                    ->htmlTemplate('email/placedOrder.html.twig')
+                    ->context([
+                        'order' => $order,
+                        'user' => $this->getUser(),
+                    ]);
+                $mailer->send($email);
+                return $this->redirectToRoute('home');
             }
             return $this->redirectToRoute('home');
         }
