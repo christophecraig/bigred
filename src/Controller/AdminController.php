@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Facebook\Facebook;
-use Facebook\Exceptions\FacebookSDKException;
-use Facebook\Exceptions\FacebookResponseException;
+// use Facebook\Facebook;
+// use Facebook\Exceptions\FacebookSDKException;
+// use Facebook\Exceptions\FacebookResponseException;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -75,13 +75,13 @@ class AdminController extends AbstractController
         Orders $order,
         MailerInterface $mailer
     ): Response {
-        $fb = new Facebook([
-            'app_id' => $_ENV['FACEBOOK_APP_ID'],
-            'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
-            'default_graph_version' => 'v7.0',
-            'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
-            'persistent_data_handler' => 'session',
-        ]);
+        // $fb = new Facebook([
+        //     'app_id' => $_ENV['FACEBOOK_APP_ID'],
+        //     'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
+        //     'default_graph_version' => 'v7.0',
+        //     'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
+        //     'persistent_data_handler' => 'session',
+        // ]);
         $client = $order->getClient();
         $params = [];
         if (null !== $request->get('filter')) {
@@ -117,53 +117,53 @@ class AdminController extends AbstractController
             } else {
                 return $this->redirectToRoute('admin', $params);
             }
-            try {
-                $fb->post(
-                    '/me/messages',
-                    [
-                        'messaging_type' => 'UPDATE',
-                        'recipient' =>
-                            '{
-                              "user_ref": "' .
-                            $client->getFbPSID() .
-                            '"
-                            }',
-                        'message' =>
-                            '{
-                              "text": "' .
-                            $message .
-                            '"
-                            }',
-                    ],
-                    (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
-                );
-            } catch (FacebookSDKException $e) {
-                // TODO : Send mail here
-                $this->addFlash(
-                    'Facebook Messenger Error',
-                    'The message has not been sent to the customer\'s Facebook Messenger account, you should contact him to let him know any updates on his order. An email has been sent instead.'
-                );
-                $email = (new TemplatedEmail())
-                    ->from(
-                        new Address(
-                            'contact@bigred.one19.nz',
-                            'BigRed Firewood'
-                        )
-                    )
-                    ->to($client->getEmail())
-                    ->subject('Your order is now waiting for confirmation!')
-                    ->htmlTemplate('email/orderUpdate.html.twig')
-                    ->context([
-                        'order' => $order,
-                        'message' => $message,
-                        'client' => $client,
-                    ]);
-                $mailer->send($email);
-                return $this->redirectToRoute('admin', $params);
-            } catch (FacebookResponseException $e) {
-                $this->addFlash('error', 'FacebookResponseException');
-                return $this->redirectToRoute('admin', $params);
-            }
+            // try {
+            //     $fb->post(
+            //         '/me/messages',
+            //         [
+            //             'messaging_type' => 'UPDATE',
+            //             'recipient' =>
+            //                 '{
+            //                   "user_ref": "' .
+            //                 $client->getFbPSID() .
+            //                 '"
+            //                 }',
+            //             'message' =>
+            //                 '{
+            //                   "text": "' .
+            //                 $message .
+            //                 '"
+            //                 }',
+            //         ],
+            //         (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
+            //     );
+            // } catch (FacebookSDKException $e) {
+            //     // TODO : Send mail here
+            //     $this->addFlash(
+            //         'Facebook Messenger Error',
+            //         'The message has not been sent to the customer\'s Facebook Messenger account, you should contact him to let him know any updates on his order. An email has been sent instead.'
+            //     );
+            //     $email = (new TemplatedEmail())
+            //         ->from(
+            //             new Address(
+            //                 'contact@bigred.one19.nz',
+            //                 'BigRed Firewood'
+            //             )
+            //         )
+            //         ->to($client->getEmail())
+            //         ->subject('Your order is now waiting for confirmation!')
+            //         ->htmlTemplate('email/orderUpdate.html.twig')
+            //         ->context([
+            //             'order' => $order,
+            //             'message' => $message,
+            //             'client' => $client,
+            //         ]);
+            //     $mailer->send($email);
+            //     return $this->redirectToRoute('admin', $params);
+            // } catch (FacebookResponseException $e) {
+            //     $this->addFlash('error', 'FacebookResponseException');
+            //     return $this->redirectToRoute('admin', $params);
+            // }
 
             return $this->redirectToRoute('admin', $params);
         }

@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
-use Facebook\Facebook;
-use Facebook\Exceptions\FacebookSDKException;
-use Facebook\Exceptions\FacebookResponseException;
+// use Facebook\Facebook;
+// use Facebook\Exceptions\FacebookSDKException;
+// use Facebook\Exceptions\FacebookResponseException;
 
 /**
  * @Route("/orders")
@@ -89,13 +89,13 @@ class OrdersController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            $fb = new Facebook([
-                'app_id' => $_ENV['FACEBOOK_APP_ID'],
-                'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
-                'default_graph_version' => 'v7.0',
-                'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
-                'persistent_data_handler' => 'session',
-            ]);
+            // $fb = new Facebook([
+            //     'app_id' => $_ENV['FACEBOOK_APP_ID'],
+            //     'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
+            //     'default_graph_version' => 'v7.0',
+            //     'default_access_token' => $_ENV['FACEBOOK_APP_TOKEN'],
+            //     'persistent_data_handler' => 'session',
+            // ]);
             // Send confirmation to messenger
             $message =
                 'Your order on the ' .
@@ -103,70 +103,90 @@ class OrdersController extends AbstractController
                 ' ' .
                 $order->getDeliveryTime() .
                 ' is now waiting for confirmation';
-            try {
-                // Returns a `FacebookFacebookResponse` object
-                $response = $fb->post(
-                    '/me/messages',
-                    [
-                        'messaging_type' => 'UPDATE',
-                        'recipient' =>
-                            '{
-                          "user_ref": "' .
-                            $this->getUser()->getFbPSID() .
-                            '"
-                        }',
-                        'message' =>
-                            '{
-                          "text": "' .
-                            $message .
-                            '"
-                        }',
-                    ],
-                    (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
-                );
-            } catch (FacebookResponseException $e) {
-                $this->addFlash(
-                    'Email sent',
-                    'You have been sent a confirmation email.'
-                );
-                $email = (new TemplatedEmail())
-                    ->from(
-                        new Address(
-                            'contact@bigred.one19.nz',
-                            'BigRed Firewood'
-                        )
+            // try {
+            //     // Returns a `FacebookFacebookResponse` object
+            //     $response = $fb->post(
+            //         '/me/messages',
+            //         [
+            //             'messaging_type' => 'UPDATE',
+            //             'recipient' =>
+            //                 '{
+            //               "user_ref": "' .
+            //                 $this->getUser()->getFbPSID() .
+            //                 '"
+            //             }',
+            //             'message' =>
+            //                 '{
+            //               "text": "' .
+            //                 $message .
+            //                 '"
+            //             }',
+            //         ],
+            //         (string) $_ENV['FACEBOOK_PAGE_ACCESS_TOKEN']
+            //     );
+            // } catch (FacebookResponseException $e) {
+            //     $this->addFlash(
+            //         'Email sent',
+            //         'You have been sent a confirmation email.'
+            //     );
+            //     $email = (new TemplatedEmail())
+            //         ->from(
+            //             new Address(
+            //                 'contact@bigred.one19.nz',
+            //                 'BigRed Firewood'
+            //             )
+            //         )
+            //         ->to($this->getUser()->getUsername())
+            //         ->subject('Your order is now waiting for confirmation!')
+            //         ->htmlTemplate('email/placedOrder.html.twig')
+            //         ->context([
+            //             'order' => $order,
+            //             'user' => $this->getUser(),
+            //         ]);
+            //     $mailer->send($email);
+            //     return $this->redirectToRoute('home');
+            // } catch (FacebookSDKException $e) {
+            //     $this->addFlash(
+            //         'Email sent',
+            //         'You have been sent a confirmation email.'
+            //     );
+            //     $email = (new TemplatedEmail())
+            //         ->from(
+            //             new Address(
+            //                 'contact@bigred.one19.nz',
+            //                 'BigRed Firewood'
+            //             )
+            //         )
+            //         ->to($this->getUser()->getUsername())
+            //         ->subject('Your order is now waiting for confirmation!')
+            //         ->htmlTemplate('email/placedOrder.html.twig')
+            //         ->context([
+            //             'order' => $order,
+            //             'user' => $this->getUser(),
+            //         ]);
+            //     $mailer->send($email);
+            //     return $this->redirectToRoute('home');
+            // }
+
+            $this->addFlash(
+                'Email sent',
+                'You have been sent a confirmation email.'
+            );
+            $email = (new TemplatedEmail())
+                ->from(
+                    new Address(
+                        'contact@bigred.one19.nz',
+                        'BigRed Firewood'
                     )
-                    ->to($this->getUser()->getUsername())
-                    ->subject('Your order is now waiting for confirmation!')
-                    ->htmlTemplate('email/placedOrder.html.twig')
-                    ->context([
-                        'order' => $order,
-                        'user' => $this->getUser(),
-                    ]);
-                $mailer->send($email);
-                return $this->redirectToRoute('home');
-            } catch (FacebookSDKException $e) {
-                $this->addFlash(
-                    'Email sent',
-                    'You have been sent a confirmation email.'
-                );
-                $email = (new TemplatedEmail())
-                    ->from(
-                        new Address(
-                            'contact@bigred.one19.nz',
-                            'BigRed Firewood'
-                        )
-                    )
-                    ->to($this->getUser()->getUsername())
-                    ->subject('Your order is now waiting for confirmation!')
-                    ->htmlTemplate('email/placedOrder.html.twig')
-                    ->context([
-                        'order' => $order,
-                        'user' => $this->getUser(),
-                    ]);
-                $mailer->send($email);
-                return $this->redirectToRoute('home');
-            }
+                )
+                ->to($this->getUser()->getUsername())
+                ->subject('Your order is now waiting for confirmation!')
+                ->htmlTemplate('email/placedOrder.html.twig')
+                ->context([
+                    'order' => $order,
+                    'user' => $this->getUser(),
+                ]);
+            $mailer->send($email);
             return $this->redirectToRoute('home');
         }
 
