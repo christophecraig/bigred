@@ -1,66 +1,108 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Home{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="/js/fullcalendar/core/main.css" rel='stylesheet' type="text/css" />
-    <link href="/js/fullcalendar/daygrid/main.css" rel='stylesheet' type="text/css" />
-    <link href="/js/fullcalendar/timegrid/main.css" rel='stylesheet' type="text/css" />
-    <link href="/css/calendar.css" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-{% block body %}
-<section class="section">
-<div class="container">
-<div class="box has-text-centered">
-    <h3 class="title">$250/3 cubic meters approx</h3>
-    <figure class="image">
-        <img src="/assets/cover.jpg"/>
-    </figure>
-    <p>Pine and Mac mix can supply in Rings or Split or just Mac or Pine loads.</p>
-    <p>May be rain wet</p>
-    <p><strong>Pahiatua, Eketahuna and Woodville only</strong></p>
-    <p>WINZ APPROVED PROVIDER</p>
-    <p>Cash on delivery or internet banking available (please include your name and address as reference)</p> 
-    <p>Loads can also be paid off in installments that suit your income and wood will be delivered on full payment.
-    Also have tree fellers license and taking inquiries about tree felling.
-    P.M us on Facebook messenger "BigRed Firewood"
-    OR
-    Text: 0211861472
-    We will contact you in the evening to organize delivery.
-    Thank you from BigRed Firewood.</p>
+{% extends 'base.html.twig' %} {% block title %}Home{% endblock %} {% block
+stylesheets %}
+{{ parent() }}
+<link href="/js/fullcalendar/core/main.css" rel="stylesheet" type="text/css" />
+<link
+  href="/js/fullcalendar/daygrid/main.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  href="/js/fullcalendar/timegrid/main.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+{% endblock %} {% block body %}
+<!-- <section class="section">
+  <div class="container">
+    {% if app.user %} {% else %}
+    <div class="has-text-centered">
+      <h3 class="title">$250/3 cubic meters approx</h3>
+      {#
+      <figure class="image">
+        <img src="/assets/cover.jpg" />
+      </figure>
+      #}
+      <p>
+        Pine and Mac mix can supply in Rings or Split or just Mac or Pine loads.
+      </p>
+      <p>May be rain wet</p>
+      <p><strong>Pahiatua, Eketahuna and Woodville only</strong></p>
+      <p>WINZ APPROVED PROVIDER</p>
+      <p>
+        Cash on delivery or internet banking available (please include your name
+        and address as reference)
+      </p>
+      <p>
+        Loads can also be paid off in installments that suit your income and
+        wood will be delivered on full payment. Also have tree fellers license
+        and taking inquiries about tree felling. P.M us on Facebook messenger
+        "BigRed Firewood" OR Text: 0211861472 We will contact you in the evening
+        to organize delivery. Thank you from BigRed Firewood.
+      </p>
     </div>
-
-
-    {% if app.user %}
-    <div class="box">
-        <div id="calendar"></div>
-        <div id="order-modal" class="modal">
-            <div class="modal-background" onclick="closeModal(event)"></div>
-                <div id="modal-content" class="modal-content">
-
-                </div>
-            <button class="modal-close is-large" aria-label="close" onclick="closeModal(event)"></button>
+  </div>
+  {% endif %}
+</section> -->
+{% endblock %} {% block order_now %}
+<div id="order_box" class="hero is-medium">
+  <div class="columns">
+    <div id="fireplace-image" class="column is-one-third"></div>
+    <div class="column">
+      <div class="hero-head">
+        <h1 class="title pl-5 pt-5">Get warm now!</h1>
+      </div>
+      <div class="hero-body">
+        <p>
+          Pine and Mac mix can supply in Rings or Split or just Mac or Pine
+          loads.
+        </p>
+        <p>May be rain wet</p>
+        <p><strong>Pahiatua, Eketahuna and Woodville only</strong></p>
+        <p>WINZ APPROVED PROVIDER</p>
+        <p>
+          Cash on delivery or internet banking available (please include your
+          name and address as reference)
+        </p>
+        <p>
+          Loads can also be paid off in installments that suit your income and
+          wood will be delivered on full payment. Also have tree fellers license
+          and taking inquiries about tree felling. P.M us on Facebook messenger
+          "BigRed Firewood" OR Text: 0211861472 We will contact you in the
+          evening to organize delivery. Thank you from BigRed Firewood.
+        </p>
+      </div>
+      <div class="hero-foot has-text-centered">
+        <div class="columns is-mobile is-vcentered">
+          <div class="column">
+            <hr class="separator-left" />
+          </div>
+          <div class="column">
+            <a
+              href="{{ path('orders_calendar') }}"
+              class="button is-danger has-text-weight-semibold"
+              >Order now</a
+            >
+          </div>
+          <div class="column">
+            <hr class="separator-right" />
+          </div>
         </div>
+        <p class="has-text-white has-text-weight-semibold mb-5">
+          Already have an account ? <a href="{{ path('app_login') }}">Log in</a>
+        </p>
+      </div>
     </div>
-    {% else %}
-        <div class="hero has-text-centered">
-            <div class="hero-body">
-            You have to <a href="{{ path('app_login') }}">log in</a> before you can place an order.
-            </div>
-        </div>
-    {% endif %}
+  </div>
 </div>
-</section>
-{% endblock %}
 
-{% block javascripts %}
-{% if app.user %}
-    <script src="/js/fullcalendar/core/main.js"></script>
-    <script src="/js/fullcalendar/core/locales/en-nz.js"></script>
-    <script src="/js/fullcalendar/daygrid/main.js"></script>
-    <script src="/js/fullcalendar/timegrid/main.js"></script>
-    <script>const orders = {{ orders | raw }};</script>
-    <script src="/js/calendar.js"></script>
-    {% endif %}
-{% endblock %}
+{% endblock %} {% block javascripts %} {% if app.user %}
+<script src="/js/fullcalendar/core/main.js"></script>
+<script src="/js/fullcalendar/core/locales/en-nz.js"></script>
+<script src="/js/fullcalendar/daygrid/main.js"></script>
+<script src="/js/fullcalendar/timegrid/main.js"></script>
+<script>
+  const orders = {{ orders | raw }};
+</script>
+<script src="/js/calendar.js"></script>
+{% endif %} {% endblock %}

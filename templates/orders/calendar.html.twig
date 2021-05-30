@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %} {% block title %}Orders calendar{% endblock %} {%
+block stylesheets %}
+{{ parent() }}
+<link href="/js/fullcalendar/core/main.css" rel="stylesheet" type="text/css" />
+<link
+  href="/js/fullcalendar/daygrid/main.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  href="/js/fullcalendar/timegrid/main.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link href="/css/calendar.css" rel="stylesheet" type="text/css" />
+<style>.container.is-widescreen {
+    background-color: white;
+    width: auto;
+    margin: 0;
+    max-width: none;
+}
+
+.fc-scroller {
+    overflow-y: hidden!important;
+}
+</style>
+{% endblock %} {% block body %}
+<div id="order_box" class="px-6 py-6">
+  <div id="calendar"></div>
+  <div id="order-modal" class="modal">
+    <div class="modal-background" onclick="closeModal(event)"></div>
+    <div id="modal-content" class="modal-content"></div>
+    <button
+      class="modal-close is-large"
+      aria-label="close"
+      onclick="closeModal(event)"
+    ></button>
+  </div>
+</div>
+{% endblock %} {% block javascripts %} 
+<script src="/js/fullcalendar/core/main.js"></script>
+<script src="/js/fullcalendar/core/locales/en-nz.js"></script>
+<script src="/js/fullcalendar/daygrid/main.js"></script>
+<script src="/js/fullcalendar/timegrid/main.js"></script>
+<script>
+  const orders = {{ orders | raw }};
+</script>
+<script src="/js/calendar.js"></script>
+{% endblock %}

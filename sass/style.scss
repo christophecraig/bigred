@@ -16,6 +16,7 @@ $family-sans-serif: 'Roboto Slab', sans-serif;
 // $grey-dark: $brown;
 // $grey-light: $beige-light;
 $primary: $purple;
+$danger: rgb(192, 38, 0);
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 $scheme-main-bis: tomato;
@@ -30,6 +31,7 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 $input-background-color: #f0f0f0;
+$hero-body-padding-medium: 2.5rem 3.5rem;
 
 // Import only what you need from Bulma
 @import '../node_modules/bulma/sass/utilities/_all.sass';
@@ -52,3 +54,29 @@ $input-background-color: #f0f0f0;
 @import '../node_modules/bulma/sass/helpers/spacing.sass';
 @import '../node_modules/bulma/sass/helpers/typography.sass';
 @import '../node_modules/bulma/sass/helpers/color.sass';
+
+// Import calendar custom style
+@import './calendar';
+
+
+#fireplace-image {
+    background-image: url("/assets/fireplace_home.jpeg");
+    background-size: cover;
+    background-position: center center;
+    margin-top: 0.75rem;
+    margin-bottom: .75rem;
+    min-height: 256px;
+}
+
+#order_box {
+    overflow: hidden;
+}
+
+.separator-left, .separator-right {
+    height: 1px;
+    background-color: #FFF;
+}
+
+.separator-right{
+    margin-right: 0.75rem; 
+}

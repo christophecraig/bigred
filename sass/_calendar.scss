@@ -1,0 +1,14 @@
+.morning, .afternoon {
+    cursor: pointer;
+}
+
+.fc-day-top {
+    position: relative;
+    pointer-events: none;
+    .fc-day-number {
+        position: absolute;
+        top: 1.25rem;
+        left: 1.25rem;
+        font-size: 2rem;
+    }
+}
