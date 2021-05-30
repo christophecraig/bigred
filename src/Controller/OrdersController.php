@@ -7,6 +7,7 @@ use App\Entity\Orders;
 use App\Form\OrdersType;
 use App\Repository\OrdersRepository;
 use DateTimeZone;
+use Symfony\Bridge\Twig\Mime\BodyRenderer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 // use Facebook\Facebook;
 // use Facebook\Exceptions\FacebookSDKException;
 // use Facebook\Exceptions\FacebookResponseException;
@@ -51,6 +56,18 @@ class OrdersController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('orders/index.html.twig', [
             'orders' => $ordersRepository->findByClient($client),
+        ]);
+    }
+
+    /**
+     * @Route("/calendar", name="orders_calendar", methods={"GET"})
+     */
+    public function calendar(OrdersRepository $ordersRepository, SerializerInterface $serializer): Response
+    {
+        $orders = $ordersRepository->findAll();
+        $data = $serializer->serialize($orders, 'json');
+        return $this->render('orders/calendar.html.twig', [
+            'orders' => $data,
         ]);
     }
 
@@ -168,10 +185,6 @@ class OrdersController extends AbstractController
             //     return $this->redirectToRoute('home');
             // }
 
-            $this->addFlash(
-                'Email sent',
-                'You have been sent a confirmation email.'
-            );
             $email = (new TemplatedEmail())
                 ->from(
                     new Address(
@@ -180,13 +193,20 @@ class OrdersController extends AbstractController
                     )
                 )
                 ->to($this->getUser()->getUsername())
-                ->subject('Your order is now waiting for confirmation!')
+                ->subject('Your ' . $order->getDeliveryDate()->format('d/m/y') . ' ' . $order->getDeliveryTime() .' is now waiting for confirmation!')
                 ->htmlTemplate('email/placedOrder.html.twig')
                 ->context([
                     'order' => $order,
                     'user' => $this->getUser(),
                 ]);
-            $mailer->send($email);
+
+
+
+                $mailer->send($email);
+            $this->addFlash(
+                'Email sent',
+                'You have been sent a confirmation email.'
+            );
             return $this->redirectToRoute('home');
         }
 

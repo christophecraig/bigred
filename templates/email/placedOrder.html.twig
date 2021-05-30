@@ -1,1 +1,8 @@
-test
+{% extends 'email/base.html.twig' %}
+
+{% block content %}
+<p>Hi {{ user.firstName }},</p>
+<p>Thank you for ordering with <a href="{{ path('home') }}">BigRed Firewood</a>.<br/>
+The order has been received on our side, you will receive an update via email when we confirm it.
+</p>
+{% endblock %}

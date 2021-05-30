@@ -4,7 +4,7 @@
       <img src="/assets/firewood.png" />
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" onclick="toggleBurgerMenu(event.target)">
+    <a role="button" id="burger-button" class="navbar-burger burger" aria-label="menu" aria-expanded="false">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -47,3 +47,14 @@
   </div>
     </div>
 </nav>
+
+{# Banner #}
+<section class="hero is-small is-light">
+  <div class="py-2 px-2 has-text-centered">
+    <a href="{{ path('home') }}#order_box">
+      <div class="is-size-4 has-text-weight-bold has-text-danger">~3 cubic meters for $250</div>
+    </a>
+  </div>
+</section> 
+
+{# Banner end #}
