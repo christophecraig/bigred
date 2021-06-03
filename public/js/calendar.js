@@ -95,7 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         hiddenDays: [0, 2, 4, 6],
-        plugins: ['dayGrid', 'timeGrid']
+        plugins: ['dayGrid', 'timeGrid'],
+        fixedWeekCount: false
     });
 
     calendar.render();
