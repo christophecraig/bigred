@@ -1,9 +1,9 @@
-<script>
+{# <script>
   window.confirmOptIn = function () {
   FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, { 'app_id':
   '2743452592557910', 'page_id': '283620859105921', 'ref': '{{ app.user.id }}',
   'user_ref': '{{ user_ref }}' }); }
-</script>
+</script> #}
 {{ form_start(form) }}
 {% if form.deliveryDate is defined %}
   {{ form_widget(form.deliveryDate) }}
@@ -25,7 +25,7 @@
     {{ form_widget(form.comment) }}
   </div>
 </div>
-<div class="fb-messenger-checkbox"
+{# <div class="fb-messenger-checkbox"
   origin="https://bigred.one19.nz"
   page_id="283620859105921"
   messenger_app_id="2743452592557910"
@@ -33,7 +33,7 @@
   allow_login="true"
   size="large"
   skin="light"
-  center_align="false"></div>
+  center_align="false"></div> #}
 <div>
   <button class="button">{{ button_label|default('Save') }}</button>
 </div>
