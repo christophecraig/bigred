@@ -39,18 +39,8 @@
     {% block order_now %}
 
     {% endblock %}
-    <footer class="footer">
-      <div class="container">
-        <div class="content has-text-centered">
-          <p>Find me on
-          <a href="https://www.facebook.com/pages/category/Local-Service/BigRed-Firewood-102429208032885/">
-            <span class="icon"><i class="fa fa-facebook-square"></i></span>BigRed
-            Firewood
-          </a></p>
-          <p>Text me <a href="sms://+64211861472">0211861472</a></p>
-        </div>
-      </div>
-    </footer>
+
+    {% include 'partials/footer.html.twig' %}
     <script src="https://kit.fontawesome.com/20c465eb55.js"></script>
     <script src="/js/main.js"></script>
     {% block javascripts %}
